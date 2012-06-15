@@ -1,0 +1,21 @@
+#IDE files
+\.settings
+\.project
+\.pydevproject
+\.cache
+
+#temp files
+\.pyc$
+\.pyo$
+\.orig$
+
+#misc files
+\.tox
+\.coverage
+
+#setup files
+^build/
+^dist/
+^.build/
+^MANIFEST$
+^port_for\.egg-info
