@@ -24,11 +24,11 @@ with multiple parts needing port numbers.
         >>> s.getsockname()
         ('0.0.0.0', 54485)
 
-    ``port-for`` is necessary when you need persistent free local port number.
+    ``port-for`` is necessary when you need *persistent* free local port number.
 
     ``port-for`` is the exact opposite of ``s.bind((host, 0))``
     is sense that it shouldn't return ports that ``s.bind((host, 0))``
-    may return (because such ports are likely to be temporary reassigned by OS).
+    may return (because such ports are likely to be temporary used by OS).
 
 
 There are several rules ``port-for`` is trying to follow to find and
@@ -71,7 +71,7 @@ Script usage
 it with ``<foo>``. Subsequent calls return the same port number.
 
 This utility doesn't actually bind the port or otherwise prevents the
-port from being taken by another software. It however tries to select
+port from being taken by another software. It tries to select
 a port that is less likely to be used by another software
 (and that is unused at the time of calling of course). Utility also makes
 sure that ``port-for bar`` won't return the same port as ``port-for foo``
@@ -85,9 +85,10 @@ on the same machine.
     $ port-for foo
     37987
 
-You may also want to prefix your app name::
+You may want to develop some naming conventions (e.g. prefix your app names)
+in order to enable multiple sites on the same server::
 
-    $ sudo port-for instance1.apache
+    $ sudo port-for example.com/apache
     35456
 
 Please note that ``port-for`` script requires read and write access
@@ -98,13 +99,13 @@ List all associated ports::
 
     $ port-for --list
     foo: 37987
-    instance1.apache: 35456
+    example.com/apache: 35456
 
 Remove an association::
 
     $ sudo port-for --unbind foo
     $ port-for --list
-    instance1.apache: 35456
+    example.com/apache: 35456
 
 
 Library usage
