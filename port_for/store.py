@@ -8,9 +8,10 @@ except ImportError: # python3
 
 from .api import select_random
 
+DEFAULT_CONFIG_PATH = '/etc/port-for.conf'
 
 class PortStore(object):
-    def __init__(self, config_filename):
+    def __init__(self, config_filename=DEFAULT_CONFIG_PATH):
         self._config = config_filename
 
     def bind_port(self, app, port=None):

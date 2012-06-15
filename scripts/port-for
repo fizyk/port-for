@@ -4,7 +4,7 @@ import optparse
 import port_for
 import port_for.store
 
-store = port_for.store.PortStore('/etc/port-for.conf')
+store = port_for.store.PortStore()
 
 def list_callback(option, opt_str, value, parser):
     for app, port in store.bound_ports():
