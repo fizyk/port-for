@@ -39,7 +39,7 @@ setup(
 
         'Operating System :: POSIX',
         'Topic :: System :: Installation/Setup',
-        'Topic :: System :: Systems Administration'
+        'Topic :: System :: Systems Administration',
         'Topic :: Internet :: WWW/HTTP :: Site Management',
     ],
 )
