@@ -10,12 +10,17 @@ from .exceptions import PortForException
 
 SYSTEM_PORT_RANGE = (0, 1024)
 
-def select_random(ports=None):
+def select_random(ports=None, exclude_ports=None):
     """
     Returns random unused port number.
     """
     if ports is None:
         ports = available_good_ports()
+
+    if exclude_ports is None:
+        exclude_ports = set()
+
+    ports.difference_update(set(exclude_ports))
 
     for port in random.sample(ports, min(len(ports), 100)):
         if not port_is_used(port):
