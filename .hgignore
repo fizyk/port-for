@@ -8,6 +8,7 @@
 \.pyc$
 \.pyo$
 \.orig$
+^temp
 
 #misc files
 \.tox

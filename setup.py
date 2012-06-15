@@ -6,7 +6,7 @@ for cmd in ('egg_info', 'develop'):
     if cmd in sys.argv:
         from setuptools import setup
 
-version='0.1'
+version='0.2'
 
 setup(
     name='port-for',

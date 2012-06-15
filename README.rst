@@ -52,16 +52,20 @@ return a new unused port:
 Installation
 ============
 
-System-wide::
+System-wide using easy_install (something like ``python-setuptools``
+should be installed)::
 
     sudo easy_install port-for
 
+Or inside a virtualenv::
+
+    pip install port-for
 
 Script usage
 ============
 
 ``port-for <foo>`` script finds an unused port and associates
-it with ``<foo>``. Subsequent calls will return the same port number.
+it with ``<foo>``. Subsequent calls return the same port number.
 
 This utility doesn't actually bind the port or otherwise prevents the
 port from being taken by another software. It however tries to select
@@ -75,7 +79,7 @@ on the same machine.
     $ sudo port-for foo
     37987
 
-    $ sudo port-for foo
+    $ port-for foo
     37987
 
 You may also want to prefix your app name::
@@ -84,7 +88,21 @@ You may also want to prefix your app name::
     35456
 
 Please note that ``port-for`` script requires read and write access
-to ``/etc/port-for.conf`` so sudo may be necessary in order to run it.
+to ``/etc/port-for.conf``. This usually means regular users can read
+port values but sudo is required to associate a new port.
+
+List all associated ports::
+
+    $ port-for --list
+    foo: 37987
+    instance1.apache: 35456
+
+Remove an association::
+
+    $ sudo port-for --unbind foo
+    $ port-for --list
+    instance1.apache: 35456
+
 
 Library usage
 =============
