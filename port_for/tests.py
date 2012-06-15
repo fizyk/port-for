@@ -47,7 +47,7 @@ class SelectPortTest(unittest.TestCase):
     @mock.patch('port_for.api.port_is_used')
     def test_all_used(self, port_is_used):
         port_is_used.return_value = True
-        self.assertEqual(port_for.select_random(), None)
+        self.assertRaises(port_for.PortForException, port_for.select_random)
 
     @mock.patch('port_for.api.port_is_used')
     def test_random_port(self, port_is_used):

@@ -7,6 +7,7 @@ except ImportError: # python3
     from configparser import ConfigParser, DEFAULTSECT
 
 from .api import select_random
+from .exceptions import PortForException
 
 DEFAULT_CONFIG_PATH = '/etc/port-for.conf'
 
@@ -33,7 +34,7 @@ class PortStore(object):
         if port in app_by_port:
             binding_app = app_by_port[port]
             if binding_app != app:
-                raise Exception('Port %s is already used by %s!' % (port, binding_app))
+                raise PortForException('Port %s is already used by %s!' % (port, binding_app))
 
         # new app & new port
         parser.set(DEFAULTSECT, app, port)

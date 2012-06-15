@@ -6,6 +6,7 @@ import errno
 import random
 from port_for import ephemeral, utils
 from ._ranges import UNASSIGNED_RANGES
+from .exceptions import PortForException
 
 SYSTEM_PORT_RANGE = (0, 1024)
 
@@ -19,6 +20,7 @@ def select_random(ports=None):
     for port in random.sample(ports, min(len(ports), 100)):
         if not port_is_used(port):
             return port
+    raise PortForException("Can't select a port")
 
 def is_available(port):
     """
