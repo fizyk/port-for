@@ -59,27 +59,49 @@ class SelectPortTest(unittest.TestCase):
             self.assertEqual(port_for.select_random(ports), 2)
 
 class StoreTest(unittest.TestCase):
+
+    def setUp(self):
+        fd, self.fname = tempfile.mkstemp()
+        self.store = port_for.PortStore(self.fname)
+
+    def tearDown(self):
+        os.remove(self.fname)
+
     def test_store(self):
-        fd, name = tempfile.mkstemp()
-        try:
-            store = port_for.PortStore(name)
-            self.assertEqual(store.bound_ports(), [])
+        assert self.store.bound_ports() == []
 
-            port = store.bind_port('foo')
-            self.assertTrue(port)
-            self.assertEqual(store.bound_ports(), [('foo', port)])
-            self.assertEqual(port, store.bind_port('foo'))
-            port2 = store.bind_port('aar')
-            self.assertNotEqual(port, port2)
-            self.assertEqual(store.bound_ports(), [('foo', port), ('aar', port2)])
+        port = self.store.bind_port('foo')
+        self.assertTrue(port)
+        self.assertEqual(self.store.bound_ports(), [('foo', port)])
+        self.assertEqual(port, self.store.bind_port('foo'))
 
-            store.unbind_port('aar')
-            self.assertEqual(store.bound_ports(), [('foo', port)])
+        port2 = self.store.bind_port('aar')
+        self.assertNotEqual(port, port2)
+        self.assertEqual(self.store.bound_ports(), [('foo', port), ('aar', port2)])
 
-            def rebind_used_port():
-                store.bind_port('baz', port)
+        self.store.unbind_port('aar')
+        self.assertEqual(self.store.bound_ports(), [('foo', port)])
 
-            self.assertRaises(Exception, rebind_used_port)
+    def test_rebind(self):
+        # try to rebind an used port for an another app
+        port = self.store.bind_port('foo')
+        self.assertRaises(port_for.PortForException, self.store.bind_port, 'baz', port)
 
-        finally:
-            os.remove(name)
+    def test_change_port(self):
+        # changing app ports is not supported.
+        port = self.store.bind_port('foo')
+        another_port = port_for.select_random()
+        assert port != another_port
+        self.assertRaises(port_for.PortForException, self.store.bind_port, 'foo', another_port)
+
+    def test_bind_unavailable(self):
+        # it is possible to explicitly bind currently unavailable port
+        port = self.store.bind_port('foo', 80)
+        self.assertEqual(port, 80)
+        self.assertEqual(self.store.bound_ports(), [('foo', 80)])
+
+    def test_bind_non_auto(self):
+        # it is possible to pass a port
+        port = port_for.select_random()
+        res_port = self.store.bind_port('foo', port)
+        self.assertEqual(res_port, port)
