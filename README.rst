@@ -3,7 +3,7 @@ port-for
 ========
 
 ``port-for`` is a command-line utility and a python library that
-helps with local TCP ports managment.
+helps with local TCP ports management.
 
 It can find an unused TCP localhost port and remember the association::
 
@@ -27,7 +27,7 @@ with multiple parts needing port numbers.
     ``port-for`` is necessary when you need *persistent* free local port number.
 
     ``port-for`` is the exact opposite of ``s.bind((host, 0))``
-    is sense that it shouldn't return ports that ``s.bind((host, 0))``
+    in the sense that it shouldn't return ports that ``s.bind((host, 0))``
     may return (because such ports are likely to be temporary used by OS).
 
 
