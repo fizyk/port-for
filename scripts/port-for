@@ -29,7 +29,7 @@ import sys
 import port_for
 from port_for.docopt import docopt
 
-store = port_for.store.PortStore()
+store = port_for.PortStore()
 
 def _list():
     for app, port in store.bound_ports():
