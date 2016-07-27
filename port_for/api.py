@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from __future__ import absolute_import, division, with_statement
 import contextlib
 import socket
 import errno
 import random
+from itertools import chain
 from port_for import ephemeral, utils
 from ._ranges import UNASSIGNED_RANGES
 from .exceptions import PortForException
@@ -37,7 +39,6 @@ def available_ports(low=1024, high=65535, exclude_ranges=None):
     """
     Returns a set of possible ports (excluding system,
     ephemeral and well-known ports).
-
     Pass ``high`` and/or ``low`` to limit the port range.
     """
     if exclude_ranges is None:
@@ -98,3 +99,54 @@ def _refuses_connection(port, host):
         sock.settimeout(1)
         err = sock.connect_ex((host, port))
         return err == errno.ECONNREFUSED
+
+
+def filter_by_type(lst, type_of):
+    """Returns a list of elements with given type."""
+    return [e for e in lst if isinstance(e, type_of)]
+
+
+def get_port(ports):
+    """
+    Retuns a random available port. If there's only one port passed
+    (e.g. 5000 or '5000') function does not check if port is available.
+    If there's -1 passed as an argument, function returns None.
+
+    :param str|int|tuple|set|list ports:
+        exact port (e.g. '8000', 8000)
+        randomly selected port (None) - any random available port
+        [(2000,3000)] or (2000,3000) - random available port from a given range
+        [{4002,4003}] or {4002,4003} - random of 4002 or 4003 ports
+        [(2000,3000), {4002,4003}] -random of given orange and set
+    :returns: a random free port
+    :raises: ValueError
+    """
+    if ports == -1:
+        return None
+    elif not ports:
+        return select_random(None)
+
+    try:
+        return int(ports)
+    except TypeError:
+        pass
+
+    ports_set = set()
+
+    try:
+        if not isinstance(ports, list):
+            ports = [ports]
+        ranges = utils.ranges_to_set(filter_by_type(ports, tuple))
+        nums = set(filter_by_type(ports, int))
+        sets = set(chain(*filter_by_type(ports, (set, frozenset))))
+        ports_set = ports_set.union(ranges, sets, nums)
+    except ValueError:
+        raise PortForException(
+            'Unknown format of ports: %s.\n'
+            'You should provide a ports range "[(4000,5000)]"'
+            'or "(4000,5000)" or a comma-separated ports set'
+            '"[{4000,5000,6000}]" or list of ints "[400,5000,6000,8000]"'
+            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"'
+            % ports)
+
+    return select_random(ports_set)
