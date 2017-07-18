@@ -30,7 +30,8 @@ def port_ranges():
 
 def _linux_ranges():
     with open('/proc/sys/net/ipv4/ip_local_port_range') as f:
-        low, high = f.read().split()
+        # use readline() instead of read() for linux + musl
+        low, high = f.readline().split()
         return [
             (int(low), int(high))
         ]
