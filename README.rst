@@ -128,12 +128,8 @@ Dig into source code for more.
 Contributing
 ============
 
-Development happens at github and bitbucket:
-
-* https://github.com/kmike/port-for/
-* https://bitbucket.org/kmike/port-for/
-
-The issue tracker is at github: https://github.com/kmike/port-for/issues/new
+Development happens at github: https://github.com/kmike/port-for/
+Issue tracker: https://github.com/kmike/port-for/issues/new
 
 In order to run tests make sure you have `tox <http://tox.testrun.org/>`_
 installed, then type
