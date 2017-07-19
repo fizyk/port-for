@@ -71,9 +71,13 @@ Installation
 System-wide using easy_install (something like ``python-setuptools``
 should be installed)::
 
+    sudo pip install port-for
+
+or::
+
     sudo easy_install port-for
 
-Or inside a virtualenv::
+or inside a virtualenv::
 
     pip install port-for
 
