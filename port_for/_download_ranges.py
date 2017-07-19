@@ -20,6 +20,7 @@ IANA_DOWNLOAD_URL = 'https://www.iana.org/assignments/service-names-port-numbers
 IANA_NS = 'http://www.iana.org/assignments'
 WIKIPEDIA_PAGE = 'http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers'
 
+
 def _write_unassigned_ranges(out_filename):
     """
     Downloads ports data from IANA & Wikipedia and converts
@@ -32,11 +33,13 @@ def _write_unassigned_ranges(out_filename):
             f.write("    (%d, %d),\n" % range)
         f.write(']\n')
 
+
 def _unassigned_ports():
     """ Returns a set of all unassigned ports (according to IANA and Wikipedia) """
     free_ports = ranges_to_set(_parse_ranges(_iana_unassigned_port_ranges()))
     known_ports = ranges_to_set(_wikipedia_known_port_ranges())
     return free_ports.difference(known_ports)
+
 
 def _wikipedia_known_port_ranges():
     """
@@ -49,6 +52,7 @@ def _wikipedia_known_port_ranges():
     # just find all numbers in table cells
     ports = re.findall('<td>((\d+)(\W(\d+))?)</td>', page, re.U)
     return ((int(p[1]), int(p[3] if p[3] else p[1])) for p in ports)
+
 
 def _iana_unassigned_port_ranges():
     """
@@ -63,6 +67,7 @@ def _iana_unassigned_port_ranges():
             numbers = record.find('{%s}number' % IANA_NS).text
             yield numbers
 
+
 def _parse_ranges(ranges):
     """ Converts a list of string ranges to a list of [low, high] tuples. """
     for txt in ranges:
@@ -71,6 +76,7 @@ def _parse_ranges(ranges):
         else:
             low, high = txt, txt
         yield int(low), int(high)
+
 
 if __name__ == '__main__':
     _write_unassigned_ranges('_ranges.py')

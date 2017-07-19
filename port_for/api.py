@@ -8,7 +8,9 @@ from port_for import ephemeral, utils
 from ._ranges import UNASSIGNED_RANGES
 from .exceptions import PortForException
 
+
 SYSTEM_PORT_RANGE = (0, 1024)
+
 
 def select_random(ports=None, exclude_ports=None):
     """
@@ -27,11 +29,13 @@ def select_random(ports=None, exclude_ports=None):
             return port
     raise PortForException("Can't select a port")
 
+
 def is_available(port):
     """
     Returns if port is good to choose.
     """
     return port in available_ports() and not port_is_used(port)
+
 
 def available_ports(low=1024, high=65535, exclude_ranges=None):
     """
@@ -53,6 +57,7 @@ def available_ports(low=1024, high=65535, exclude_ranges=None):
     )
     return available.difference(exclude)
 
+
 def good_port_ranges(ports=None, min_range_len=20, border=3):
     """
     Returns a list of 'good' port ranges.
@@ -67,6 +72,7 @@ def good_port_ranges(ports=None, min_range_len=20, border=3):
     long_ranges = [l[1] for l in lenghts if l[0] >= min_range_len]
     without_borders = [(low+border, high-border) for low, high in long_ranges]
     return without_borders
+
 
 def available_good_ports(min_range_len=20, border=3):
     return utils.ranges_to_set(
@@ -91,6 +97,7 @@ def _can_bind(port, host):
         except socket.error:
             return False
     return True
+
 
 def _refuses_connection(port, host):
     sock = socket.socket()

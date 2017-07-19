@@ -9,7 +9,9 @@ except ImportError: # python3
 from .api import select_random
 from .exceptions import PortForException
 
+
 DEFAULT_CONFIG_PATH = '/etc/port-for.conf'
+
 
 class PortStore(object):
     def __init__(self, config_filename=DEFAULT_CONFIG_PATH):
@@ -28,7 +30,8 @@ class PortStore(object):
         if parser.has_option(DEFAULTSECT, app):
             actual_port = parser.get(DEFAULTSECT, app)
             if port is not None and port != actual_port:
-                msg = "Can't bind to port %s: %s is already associated with port %s" % (port, app, actual_port)
+                msg = "Can't bind to port %s: %s is already associated " \
+                      "with port %s" % (port, app, actual_port)
                 raise PortForException(msg)
             return int(actual_port)
 
@@ -42,7 +45,8 @@ class PortStore(object):
         if port in app_by_port:
             binding_app = app_by_port[port]
             if binding_app != app:
-                raise PortForException('Port %s is already used by %s!' % (port, binding_app))
+                raise PortForException('Port %s is already used by %s!' % (
+                    port, binding_app))
 
         # new app & new port
         parser.set(DEFAULTSECT, app, port)
@@ -56,7 +60,8 @@ class PortStore(object):
         self._save(parser)
 
     def bound_ports(self):
-        return [(app, int(port)) for app, port in self._get_parser().items(DEFAULTSECT)]
+        return [(app, int(port))
+                for app, port in self._get_parser().items(DEFAULTSECT)]
 
     def _ensure_config_exists(self):
         if not os.path.exists(self._config):

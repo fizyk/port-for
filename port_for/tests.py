@@ -8,9 +8,11 @@ import os
 import port_for
 from port_for.utils import ranges_to_set
 
+
 def test_common_ports():
     assert port_for.is_available(80) == False
     assert port_for.is_available(11211) == False
+
 
 def test_good_port_ranges():
     ranges = [
@@ -25,13 +27,16 @@ def test_good_port_ranges():
     good_ranges = port_for.good_port_ranges(ports, 20, 3)
     assert good_ranges == [(103, 197), (443, 492), (303, 327)], good_ranges
 
+
 def test_something_works():
     assert len(port_for.good_port_ranges()) > 10
     assert len(port_for.available_good_ports()) > 1000
 
+
 def test_binding():
     # low ports are not available
     assert port_for.port_is_used(10) == True
+
 
 def test_binding_high():
     s = socket.socket()
@@ -57,6 +62,7 @@ class SelectPortTest(unittest.TestCase):
 
         for x in range(100):
             self.assertEqual(port_for.select_random(ports), 2)
+
 
 class StoreTest(unittest.TestCase):
 

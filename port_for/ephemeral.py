@@ -11,6 +11,7 @@ import subprocess
 
 DEFAULT_EPHEMERAL_PORT_RANGE = (32768, 65535)
 
+
 def port_ranges():
     """
     Returns a list of ephemeral port ranges for current machine.
@@ -28,6 +29,7 @@ def port_ranges():
     # fallback
     return [DEFAULT_EPHEMERAL_PORT_RANGE]
 
+
 def _linux_ranges():
     with open('/proc/sys/net/ipv4/ip_local_port_range') as f:
         # use readline() instead of read() for linux + musl
@@ -35,6 +37,7 @@ def _linux_ranges():
         return [
             (int(low), int(high))
         ]
+
 
 def _bsd_ranges():
     pp = subprocess.Popen(['sysctl', 'net.inet.ip.portrange'], stdout=subprocess.PIPE)
