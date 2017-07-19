@@ -1,0 +1,61 @@
+language: python
+sudo: false
+branches:
+  only:
+    - master
+    - /^\d\.\d+$/
+
+matrix:
+  include:
+    - os: linux
+      python: 2.7
+      env: TOXENV=py27
+    - os: linux
+      python: 3.3
+      env: TOXENV=py33
+    - os: linux
+      python: 3.4
+      env: TOXENV=py34
+    - os: linux
+      python: 3.5
+      env: TOXENV=py35
+    - os: linux
+      python: 3.6
+      env: TOXENV=py36
+    - os: osx
+      language: generic
+      env:
+        - PYTHON='3.6.2'
+        - TOXENV=py36
+    - os: osx
+      language: generic
+      env:
+        - PYTHON='2.7.13'
+        - TOXENV=py27
+
+before_install:
+- |
+  if [[ $PYTHON && "$TRAVIS_OS_NAME" == "osx" ]]; then
+    brew update;
+    brew install openssl readline;
+    brew outdated pyenv || brew upgrade pyenv;
+    brew install pyenv-virtualenv;
+    pyenv install $PYTHON;
+    export PYENV_VERSION=$PYTHON;
+    export PATH="/Users/travis/.pyenv/shims:${PATH}";
+    pyenv-virtualenv venv;
+    source venv/bin/activate;
+    python --version;
+  fi;
+
+install:
+  - pip install -U pip tox codecov
+
+script: tox
+
+after_success:
+  - codecov
+
+cache:
+  directories:
+    - $HOME/.cache/pip

@@ -2,6 +2,19 @@
 port-for
 ========
 
+.. image:: https://img.shields.io/pypi/v/port-for.svg
+   :target: https://pypi.python.org/pypi/port-for
+   :alt: PyPI Version
+
+.. image:: https://img.shields.io/travis/kmike/port-for/master.svg
+   :target: http://travis-ci.org/kmike/port-for
+   :alt: Build Status
+
+.. image:: http://codecov.io/github/kmike/port-for/coverage.svg?branch=master
+   :target: http://codecov.io/github/kmike/port-for?branch=master
+   :alt: Code Coverage
+
+
 ``port-for`` is a command-line utility and a python library that
 helps with local TCP ports management.
 
@@ -129,6 +142,7 @@ Contributing
 ============
 
 Development happens at github: https://github.com/kmike/port-for/
+
 Issue tracker: https://github.com/kmike/port-for/issues/new
 
 In order to run tests make sure you have `tox <http://tox.testrun.org/>`_
