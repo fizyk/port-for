@@ -80,7 +80,7 @@ def available_good_ports(min_range_len=20, border=3):
     )
 
 
-def port_is_used(port, host='127.0.0.1'):
+def port_is_used(port, host='localhost'):
     """
     Returns if port is used. Port is considered used if the current process
     can't bind to it or the port doesn't refuse connections.
@@ -103,5 +103,6 @@ def _refuses_connection(port, host):
     sock = socket.socket()
     with contextlib.closing(sock):
         sock.settimeout(1)
+        sock.setblocking(True)
         err = sock.connect_ex((host, port))
         return err == errno.ECONNREFUSED
