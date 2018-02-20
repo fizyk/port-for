@@ -80,7 +80,7 @@ def available_good_ports(min_range_len=20, border=3):
     )
 
 
-def port_is_used(port, host='localhost'):
+def port_is_used(port, host='127.0.0.1'):
     """
     Returns if port is used. Port is considered used if the current process
     can't bind to it or the port doesn't refuse connections.
