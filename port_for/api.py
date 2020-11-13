@@ -24,7 +24,7 @@ def select_random(ports=None, exclude_ports=None):
 
     ports.difference_update(set(exclude_ports))
 
-    for port in random.sample(ports, min(len(ports), 100)):
+    for port in random.sample(tuple(ports), min(len(ports), 100)):
         if not port_is_used(port):
             return port
     raise PortForException("Can't select a port")
