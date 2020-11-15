@@ -103,5 +103,6 @@ def _refuses_connection(port, host):
     sock = socket.socket()
     with contextlib.closing(sock):
         sock.settimeout(1)
+        sock.setblocking(True)
         err = sock.connect_ex((host, port))
         return err == errno.ECONNREFUSED

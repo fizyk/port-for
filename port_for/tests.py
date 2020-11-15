@@ -39,12 +39,12 @@ def test_binding():
 
 
 def test_binding_high():
+    port = port_for.available_good_ports().pop()
     s = socket.socket()
-    s.bind(("", 0))
-    port = s.getsockname()[1]
-    assert port_for.port_is_used(port) == True
+    s.bind(("127.0.0.1", port))
+    assert port_for.port_is_used(port) is True
     s.close()
-    assert port_for.port_is_used(port) == False
+    assert port_for.port_is_used(port) is False
 
 
 class SelectPortTest(unittest.TestCase):
