@@ -49,7 +49,7 @@ class Pattern(object):
         """Make pattern-tree tips point to same object if they are equal."""
         if not hasattr(self, "children"):
             return self
-        uniq = list(set(self.flat)) if uniq == None else uniq
+        uniq = list(set(self.flat)) if uniq is None else uniq
         for i, c in enumerate(self.children):
             if not hasattr(c, "children"):
                 assert c in uniq
@@ -108,7 +108,7 @@ class Argument(Pattern):
 
     def match(self, left, collected=None):
         collected = [] if collected is None else collected
-        args = [l for l in left if type(l) is Argument]
+        args = [arg_left for arg_left in left if type(arg_left) is Argument]
         if not len(args):
             return False, left, collected
         left.remove(args[0])
@@ -138,7 +138,7 @@ class Command(Pattern):
 
     def match(self, left, collected=None):
         collected = [] if collected is None else collected
-        args = [l for l in left if type(l) is Argument]
+        args = [arg_left for arg_left in left if type(arg_left) is Argument]
         if not len(args) or args[0].value != self.name:
             return False, left, collected
         left.remove(args[0])
@@ -153,7 +153,7 @@ class Option(Pattern):
         assert argcount in (0, 1)
         self.short, self.long = short, long
         self.argcount, self.value = argcount, value
-        self.value = None if value == False and argcount else value  # HACK
+        self.value = None if not value and argcount else value  # HACK
 
     @classmethod
     def parse(class_, option_description):
@@ -168,20 +168,20 @@ class Option(Pattern):
             else:
                 argcount = 1
         if argcount:
-            matched = re.findall("\[default: (.*)\]", description, flags=re.I)
+            matched = re.findall(r"\[default: (.*)\]", description, flags=re.I)
             value = matched[0] if matched else None
         return class_(short, long, argcount, value)
 
     def match(self, left, collected=None):
         collected = [] if collected is None else collected
         left_ = []
-        for l in left:
+        for arg_left in left:
             # if this is so greedy, how to handle OneOrMore then?
             if not (
-                type(l) is Option
-                and (self.short, self.long) == (l.short, l.long)
+                type(arg_left) is Option
+                and (self.short, self.long) == (arg_left.short, arg_left.long)
             ):
-                left_.append(l)
+                left_.append(arg_left)
         return (left != left_), left_, collected
 
     @property
@@ -200,20 +200,20 @@ class Option(Pattern):
 class AnyOptions(Pattern):
     def match(self, left, collected=None):
         collected = [] if collected is None else collected
-        left_ = [l for l in left if not type(l) == Option]
+        left_ = [opt_left for opt_left in left if not type(opt_left) == Option]
         return (left != left_), left_, collected
 
 
 class Required(Pattern):
     def match(self, left, collected=None):
         collected = [] if collected is None else collected
-        l = copy(left)
+        copied_left = copy(left)
         c = copy(collected)
         for p in self.children:
-            matched, l, c = p.match(l, c)
+            matched, copied_left, c = p.match(copied_left, c)
             if not matched:
                 return False, left, collected
-        return True, l, c
+        return True, copied_left, c
 
 
 class Optional(Pattern):
@@ -229,20 +229,21 @@ class OneOrMore(Pattern):
     def match(self, left, collected=None):
         assert len(self.children) == 1
         collected = [] if collected is None else collected
-        l = copy(left)
+        pattern_left = copy(left)
         c = copy(collected)
         l_ = None
         matched = True
         times = 0
         while matched:
-            # could it be that something didn't match but changed l or c?
-            matched, l, c = self.children[0].match(l, c)
+            # could it be that something didn't match but
+            # changed pattern_left or c?
+            matched, pattern_left, c = self.children[0].match(pattern_left, c)
             times += 1 if matched else 0
-            if l_ == l:
+            if l_ == pattern_left:
                 break
-            l_ = copy(l)
+            l_ = copy(pattern_left)
         if times >= 1:
-            return True, l, c
+            return True, pattern_left, c
         return False, left, collected
 
 

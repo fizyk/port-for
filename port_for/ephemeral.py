@@ -44,7 +44,11 @@ def _bsd_ranges():
     stdout, stderr = pp.communicate()
     lines = stdout.decode("ascii").split("\n")
     out = dict(
-        [[x.strip().rsplit(".")[-1] for x in l.split(":")] for l in lines if l]
+        [
+            [x.strip().rsplit(".")[-1] for x in line.split(":")]
+            for line in lines
+            if line
+        ]
     )
 
     ranges = [

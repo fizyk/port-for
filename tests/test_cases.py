@@ -10,8 +10,8 @@ from port_for.utils import ranges_to_set
 
 
 def test_common_ports():
-    assert port_for.is_available(80) == False
-    assert port_for.is_available(11211) == False
+    assert not port_for.is_available(80)
+    assert not port_for.is_available(11211)
 
 
 def test_good_port_ranges():
@@ -35,16 +35,16 @@ def test_something_works():
 
 def test_binding():
     # low ports are not available
-    assert port_for.port_is_used(10) == True
+    assert port_for.port_is_used(10)
 
 
 def test_binding_high():
     s = socket.socket()
     s.bind(("", 0))
     port = s.getsockname()[1]
-    assert port_for.port_is_used(port) == True
+    assert port_for.port_is_used(port)
     s.close()
-    assert port_for.port_is_used(port) == False
+    assert not port_for.port_is_used(port)
 
 
 class SelectPortTest(unittest.TestCase):

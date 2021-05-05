@@ -3,22 +3,24 @@
 This module/script is for updating port_for._ranges with recent information
 from IANA and Wikipedia.
 """
-from __future__ import absolute_import
 import sys
 import os
 import re
 import datetime
-import urllib2
+from urllib.request import Request, urlopen
 from xml.etree import ElementTree
+
+from port_for.utils import to_ranges, ranges_to_set
 
 name = os.path.abspath(
     os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
 )
 sys.path.insert(0, name)
 
-from port_for.utils import to_ranges, ranges_to_set
-
-IANA_DOWNLOAD_URL = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xml"
+IANA_DOWNLOAD_URL = (
+    "https://www.iana.org/assignments"
+    "/service-names-port-numbers/service-names-port-numbers.xml"
+)
 IANA_NS = "http://www.iana.org/assignments"
 WIKIPEDIA_PAGE = "http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers"
 
@@ -40,7 +42,7 @@ def _write_unassigned_ranges(out_filename):
 
 
 def _unassigned_ports():
-    """Returns a set of all unassigned ports (according to IANA and Wikipedia)"""
+    """Return a set of all unassigned ports (according to IANA and Wikipedia)"""
     free_ports = ranges_to_set(_parse_ranges(_iana_unassigned_port_ranges()))
     known_ports = ranges_to_set(_wikipedia_known_port_ranges())
     return free_ports.difference(known_ports)
@@ -51,13 +53,11 @@ def _wikipedia_known_port_ranges():
     Returns used port ranges according to Wikipedia page.
     This page contains unofficial well-known ports.
     """
-    req = urllib2.Request(
-        WIKIPEDIA_PAGE, headers={"User-Agent": "Magic Browser"}
-    )
-    page = urllib2.urlopen(req).read().decode("utf8")
+    req = Request(WIKIPEDIA_PAGE, headers={"User-Agent": "Magic Browser"})
+    page = urlopen(req).read().decode("utf8")
 
     # just find all numbers in table cells
-    ports = re.findall("<td>((\d+)(\W(\d+))?)</td>", page, re.U)
+    ports = re.findall(r"<td>((\d+)(\W(\d+))?)</td>", page, re.U)
     return ((int(p[1]), int(p[3] if p[3] else p[1])) for p in ports)
 
 
@@ -65,7 +65,7 @@ def _iana_unassigned_port_ranges():
     """
     Returns unassigned port ranges according to IANA.
     """
-    page = urllib2.urlopen(IANA_DOWNLOAD_URL).read()
+    page = urlopen(IANA_DOWNLOAD_URL).read()
     xml = ElementTree.fromstring(page)
     records = xml.findall("{%s}record" % IANA_NS)
     for record in records:
