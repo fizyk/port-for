@@ -48,12 +48,9 @@ def available_ports(low=1024, high=65535, exclude_ranges=None):
         exclude_ranges = []
     available = utils.ranges_to_set(UNASSIGNED_RANGES)
     exclude = utils.ranges_to_set(
-        ephemeral.port_ranges() + exclude_ranges +
-        [
-            SYSTEM_PORT_RANGE,
-            (SYSTEM_PORT_RANGE[1], low),
-            (high, 65536)
-        ]
+        ephemeral.port_ranges()
+        + exclude_ranges
+        + [SYSTEM_PORT_RANGE, (SYSTEM_PORT_RANGE[1], low), (high, 65536)]
     )
     return available.difference(exclude)
 
@@ -64,13 +61,17 @@ def good_port_ranges(ports=None, min_range_len=20, border=3):
     Such ranges are large and don't contain ephemeral or well-known ports.
     Ranges borders are also excluded.
     """
-    min_range_len += border*2
+    min_range_len += border * 2
     if ports is None:
         ports = available_ports()
     ranges = utils.to_ranges(list(ports))
-    lenghts = sorted([(r[1]-r[0], r) for r in ranges], reverse=True)
-    long_ranges = [l[1] for l in lenghts if l[0] >= min_range_len]
-    without_borders = [(low+border, high-border) for low, high in long_ranges]
+    lenghts = sorted([(r[1] - r[0], r) for r in ranges], reverse=True)
+    long_ranges = [
+        length[1] for length in lenghts if length[0] >= min_range_len
+    ]
+    without_borders = [
+        (low + border, high - border) for low, high in long_ranges
+    ]
     return without_borders
 
 
@@ -80,7 +81,7 @@ def available_good_ports(min_range_len=20, border=3):
     )
 
 
-def port_is_used(port, host='127.0.0.1'):
+def port_is_used(port, host="127.0.0.1"):
     """
     Returns if port is used. Port is considered used if the current process
     can't bind to it or the port doesn't refuse connections.

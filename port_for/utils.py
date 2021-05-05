@@ -12,7 +12,7 @@ def ranges_to_set(lst):
     [1, 2, 3, 5, 6]
 
     """
-    return set(itertools.chain(*(range(x[0], x[1]+1) for x in lst)))
+    return set(itertools.chain(*(range(x[0], x[1] + 1) for x in lst)))
 
 
 def to_ranges(lst):
@@ -27,4 +27,3 @@ def to_ranges(lst):
     for a, b in itertools.groupby(enumerate(lst), lambda t: t[1] - t[0]):
         b = list(b)
         yield b[0][1], b[-1][1]
-
