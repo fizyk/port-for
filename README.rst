@@ -6,10 +6,6 @@ port-for
    :target: https://pypi.python.org/pypi/port-for
    :alt: PyPI Version
 
-.. image:: https://img.shields.io/travis/kmike/port-for/master.svg
-   :target: http://travis-ci.org/kmike/port-for
-   :alt: Build Status
-
 .. image:: http://codecov.io/github/kmike/port-for/coverage.svg?branch=master
    :target: http://codecov.io/github/kmike/port-for?branch=master
    :alt: Code Coverage
