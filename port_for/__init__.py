@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-__version__ = "0.4"
+__version__ = "0.4.0"
 
 from .api import (
     available_good_ports,

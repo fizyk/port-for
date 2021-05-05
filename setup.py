@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="port-for",
-    version="0.4",
+    version="0.4.0",
     author="Mikhail Korobov",
     author_email="kmike84@gmail.com",
     packages=["port_for"],
