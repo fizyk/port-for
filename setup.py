@@ -11,7 +11,7 @@ setup(
     scripts=["scripts/port-for"],
     url="https://github.com/kmike/port-for/",
     license="MIT license",
-    description="""Utility that helps with local TCP ports managment.
+    description="""Utility that helps with local TCP ports management.
     It can find an unused TCP localhost port and remember the association.""",
     long_description=open("README.rst").read(),
     classifiers=[
