@@ -5,7 +5,11 @@ import tempfile
 import mock
 import socket
 import os
+
+import pytest
+
 import port_for
+from port_for.api import get_port
 from port_for.utils import ranges_to_set
 
 
@@ -45,6 +49,48 @@ def test_binding_high():
     assert port_for.port_is_used(port)
     s.close()
     assert not port_for.port_is_used(port)
+
+
+def test_get_port_none():
+    """Test special case for get_port to return None."""
+    assert not get_port(-1)
+
+
+@pytest.mark.parametrize("port", (1234, "1234"))
+def test_get_port_specific(port):
+    """Test special case for get_port to return same value."""
+    assert get_port(port) == 1234
+
+
+@pytest.mark.parametrize(
+    "port_range",
+    (
+        [(2000, 3000)],
+        (2000, 3000),
+    ),
+)
+def test_get_port_from_range(port_range):
+    """Test getting random port from given range."""
+    assert get_port(port_range) in list(range(2000, 3000 + 1))
+
+
+@pytest.mark.parametrize(
+    "port_set",
+    (
+        [{4001, 4002, 4003}],
+        {4001, 4002, 4003},
+    ),
+)
+def test_get_port_from_set(port_set):
+    """Test getting random port from given set."""
+    assert get_port(port_set) in {4001, 4002, 4003}
+
+
+def test_port_mix():
+    """Test getting random port from given set and range."""
+    assert get_port([(2000, 3000), {4001, 4002, 4003}]) in set(
+        range(2000, 3000 + 1)
+    ) and {4001, 4002, 4003}
 
 
 class SelectPortTest(unittest.TestCase):
