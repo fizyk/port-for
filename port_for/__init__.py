@@ -10,6 +10,7 @@ from .api import (
     good_port_ranges,
     port_is_used,
     select_random,
+    get_port,
     UNASSIGNED_RANGES,
 )
 from .store import PortStore
