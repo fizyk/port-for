@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 port-for is a command-line utility that
-helps with local TCP ports managment. It
+helps with local TCP ports management. It
 finds 'good' unused TCP localhost port and
 remembers the association.
 
@@ -31,16 +31,20 @@ from port_for.docopt import docopt
 
 store = port_for.PortStore()
 
+
 def _list():
     for app, port in store.bound_ports():
         sys.stdout.write("%s: %s\n" % (app, port))
+
 
 def _bind(app, port=None):
     port = store.bind_port(app, port)
     sys.stdout.write("%s\n" % port)
 
+
 def _unbind(app):
     store.unbind_port(app)
+
 
 if __name__ == '__main__':
     args = docopt(__doc__, version='port-for %s' % port_for.__version__)

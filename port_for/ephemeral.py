@@ -11,13 +11,14 @@ import subprocess
 
 DEFAULT_EPHEMERAL_PORT_RANGE = (32768, 65535)
 
+
 def port_ranges():
     """
     Returns a list of ephemeral port ranges for current machine.
     """
     try:
         return _linux_ranges()
-    except (OSError, IOError): # not linux, try BSD
+    except (OSError, IOError):  # not linux, try BSD
         try:
             ranges = _bsd_ranges()
             if ranges:
@@ -28,27 +29,36 @@ def port_ranges():
     # fallback
     return [DEFAULT_EPHEMERAL_PORT_RANGE]
 
+
 def _linux_ranges():
-    with open('/proc/sys/net/ipv4/ip_local_port_range') as f:
-        low, high = f.read().split()
-        return [
-            (int(low), int(high))
-        ]
+    with open("/proc/sys/net/ipv4/ip_local_port_range") as f:
+        # use readline() instead of read() for linux + musl
+        low, high = f.readline().split()
+        return [(int(low), int(high))]
+
 
 def _bsd_ranges():
-    pp = subprocess.Popen(['sysctl', 'net.inet.ip.portrange'], stdout=subprocess.PIPE)
+    pp = subprocess.Popen(
+        ["sysctl", "net.inet.ip.portrange"], stdout=subprocess.PIPE
+    )
     stdout, stderr = pp.communicate()
-    lines = stdout.decode('ascii').split('\n')
-    out = dict([[x.strip().rsplit('.')[-1] for x in l.split(':')] for l in lines if l])
+    lines = stdout.decode("ascii").split("\n")
+    out = dict(
+        [
+            [x.strip().rsplit(".")[-1] for x in line.split(":")]
+            for line in lines
+            if line
+        ]
+    )
 
     ranges = [
         # FreeBSD & Mac
-        ('first', 'last'),
-        ('lowfirst', 'lowlast'),
-        ('hifirst', 'hilast'),
+        ("first", "last"),
+        ("lowfirst", "lowlast"),
+        ("hifirst", "hilast"),
         # OpenBSD
-        ('portfirst', 'portlast'),
-        ('porthifirst', 'porthilast'),
+        ("portfirst", "portlast"),
+        ("porthifirst", "porthilast"),
     ]
 
     res = []
