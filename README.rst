@@ -136,6 +136,21 @@ Library usage
     >>> 80 in port_for.available_good_ports()
     False
 
+    >>> port_for.get_port()
+    34455
+
+    >>> port_for.get_port("1234")
+    1234
+
+    >>> port_for.get_port((2000, 3000))
+    2345
+
+    >>> port_for.get_port({4001, 4003, 4005})
+    4005
+
+    >>> port_for.get_port([{4000, 4001}, (4100, 4200)])
+    4111
+
 Dig into source code for more.
 
 Contributing
@@ -144,12 +159,3 @@ Contributing
 Development happens at github: https://github.com/kmike/port-for/
 
 Issue tracker: https://github.com/kmike/port-for/issues/new
-
-In order to run tests make sure you have `tox <http://tox.testrun.org/>`_
-installed, then type
-
-::
-
-    tox
-
-from the source checkout.
