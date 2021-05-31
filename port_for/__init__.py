@@ -3,6 +3,7 @@ from __future__ import absolute_import
 
 __version__ = "0.5.0"
 
+from ._ranges import UNASSIGNED_RANGES
 from .api import (
     available_good_ports,
     available_ports,
@@ -11,7 +12,19 @@ from .api import (
     port_is_used,
     select_random,
     get_port,
-    UNASSIGNED_RANGES,
 )
 from .store import PortStore
 from .exceptions import PortForException
+
+__all__ = (
+    "UNASSIGNED_RANGES",
+    "available_good_ports",
+    "available_ports",
+    "is_available",
+    "good_port_ranges",
+    "port_is_used",
+    "select_random",
+    "get_port",
+    "PortStore",
+    "PortForException",
+)
