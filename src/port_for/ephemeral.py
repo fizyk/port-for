@@ -6,7 +6,6 @@ about ephemeral port ranges.
 
 Currently only Linux and BSD (including OS X) are supported.
 """
-from __future__ import absolute_import, with_statement
 import subprocess
 from typing import List, Tuple, Dict
 
