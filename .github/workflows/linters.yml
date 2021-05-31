@@ -32,7 +32,7 @@ jobs:
         pip install -r requirements-lint.txt
     - name: Run pydocstyle
       run: |
-        pydocstyle port_for/ tests/
+        pydocstyle src/ tests/
 
   pycodestyle:
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
         pip install -r requirements-lint.txt
     - name: Run pydocstyle
       run: |
-        pycodestyle port_for/ tests/
+        pycodestyle src/ tests/
 
   black:
     runs-on: ubuntu-latest
@@ -77,4 +77,4 @@ jobs:
         pip install -r requirements-lint.txt
     - name: Run mypy
       run: |
-        mypy port_for/ tests/ scripts/port-for
+        mypy src/port_for/ tests/ scripts/port-for
