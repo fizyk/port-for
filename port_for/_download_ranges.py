@@ -9,6 +9,7 @@ import re
 import datetime
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
+from typing import Set, Iterator, Iterable, Tuple
 
 from port_for.utils import to_ranges, ranges_to_set
 
@@ -25,7 +26,7 @@ IANA_NS = "http://www.iana.org/assignments"
 WIKIPEDIA_PAGE = "http://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers"
 
 
-def _write_unassigned_ranges(out_filename):
+def _write_unassigned_ranges(out_filename: str) -> None:
     """
     Downloads ports data from IANA & Wikipedia and converts
     it to a python module. This function is used to generate _ranges.py.
@@ -41,14 +42,14 @@ def _write_unassigned_ranges(out_filename):
         f.write("]\n")
 
 
-def _unassigned_ports():
+def _unassigned_ports() -> Set[int]:
     """Return a set of all unassigned ports (according to IANA and Wikipedia)"""
     free_ports = ranges_to_set(_parse_ranges(_iana_unassigned_port_ranges()))
     known_ports = ranges_to_set(_wikipedia_known_port_ranges())
     return free_ports.difference(known_ports)
 
 
-def _wikipedia_known_port_ranges():
+def _wikipedia_known_port_ranges() -> Iterator[Tuple[int, int]]:
     """
     Returns used port ranges according to Wikipedia page.
     This page contains unofficial well-known ports.
@@ -61,7 +62,7 @@ def _wikipedia_known_port_ranges():
     return ((int(p[1]), int(p[3] if p[3] else p[1])) for p in ports)
 
 
-def _iana_unassigned_port_ranges():
+def _iana_unassigned_port_ranges() -> Iterator[str]:
     """
     Returns unassigned port ranges according to IANA.
     """
@@ -69,13 +70,18 @@ def _iana_unassigned_port_ranges():
     xml = ElementTree.fromstring(page)
     records = xml.findall("{%s}record" % IANA_NS)
     for record in records:
-        description = record.find("{%s}description" % IANA_NS).text
+        description_el = record.find("{%s}description" % IANA_NS)
+        assert description_el is not None
+        description = description_el.text
         if description == "Unassigned":
-            numbers = record.find("{%s}number" % IANA_NS).text
+            number_el = record.find("{%s}number" % IANA_NS)
+            assert number_el is not None
+            numbers = number_el.text
+            assert numbers is not None
             yield numbers
 
 
-def _parse_ranges(ranges):
+def _parse_ranges(ranges: Iterable[str]) -> Iterator[Tuple[int, int]]:
     """Converts a list of string ranges to a list of [low, high] tuples."""
     for txt in ranges:
         if "-" in txt:

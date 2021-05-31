@@ -8,11 +8,12 @@ Currently only Linux and BSD (including OS X) are supported.
 """
 from __future__ import absolute_import, with_statement
 import subprocess
+from typing import List, Tuple, Dict
 
 DEFAULT_EPHEMERAL_PORT_RANGE = (32768, 65535)
 
 
-def port_ranges():
+def port_ranges() -> List[Tuple[int, int]]:
     """
     Returns a list of ephemeral port ranges for current machine.
     """
@@ -30,22 +31,25 @@ def port_ranges():
     return [DEFAULT_EPHEMERAL_PORT_RANGE]
 
 
-def _linux_ranges():
+def _linux_ranges() -> List[Tuple[int, int]]:
     with open("/proc/sys/net/ipv4/ip_local_port_range") as f:
         # use readline() instead of read() for linux + musl
         low, high = f.readline().split()
         return [(int(low), int(high))]
 
 
-def _bsd_ranges():
+def _bsd_ranges() -> List[Tuple[int, int]]:
     pp = subprocess.Popen(
         ["sysctl", "net.inet.ip.portrange"], stdout=subprocess.PIPE
     )
     stdout, stderr = pp.communicate()
     lines = stdout.decode("ascii").split("\n")
-    out = dict(
+    out: Dict[str, str] = dict(
         [
-            [x.strip().rsplit(".")[-1] for x in line.split(":")]
+            [
+                x.strip().rsplit(".")[-1]  # type: ignore[misc]
+                for x in line.split(":")
+            ]
             for line in lines
             if line
         ]

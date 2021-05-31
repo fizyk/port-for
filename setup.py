@@ -31,4 +31,6 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: Site Management",
     ],
     python_requires=">=3.6",
+    zip_safe=False,
+    package_data={"port_for": ["py.typed"]},
 )
