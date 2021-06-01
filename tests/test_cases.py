@@ -51,6 +51,11 @@ def test_binding_high() -> None:
     assert not port_for.port_is_used(port)
 
 
+def test_get_port_random() -> None:
+    """Test case allowing get port to randomly select any port."""
+    assert get_port(None)
+
+
 def test_get_port_none() -> None:
     """Test special case for get_port to return None."""
     assert not get_port(-1)
