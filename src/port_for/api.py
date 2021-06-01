@@ -127,6 +127,7 @@ def filter_by_type(lst: Iterable, type_of: Type[T]) -> List[T]:
 
 def get_port(
     ports: Union[
+        None,
         str,
         int,
         Tuple[int, int],
