@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+unreleased
+----------
+
+Bugfix
+++++++
+
+- Fixed typing definition for get_port function
+
 0.6.0
 ----------
 
