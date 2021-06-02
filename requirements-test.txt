@@ -1,6 +1,6 @@
 # test runs requirements (versions we'll be testing against) - automatically updated
 mock==4.0.3
 pytest==6.2.4  # tests framework used
-pytest-cov==2.12.0  # coverage reports to verify tests quality
+pytest-cov==2.12.1  # coverage reports to verify tests quality
 coverage==5.5 # pytest-cov
 -e .[tests]
