@@ -55,6 +55,15 @@ def available_ports(
         exclude_ranges = []
     available = utils.ranges_to_set(UNASSIGNED_RANGES)
     exclude = utils.ranges_to_set(
+        # Motivation behind excluding ephemeral port ranges:
+        # let's say you decided to use an ephemeral local port
+        # as a persistent port, and "reserve" it to your software.
+        # OS won't know about it, and still can try to use this port.
+        # This is not a problem if your service is always running and occupying
+        # this port (OS would pick next one). But if the service is temporarily
+        # not using the port (because of restart of other reason),
+        # OS might reuse the same port,
+        # which might prevent the service from starting.
         ephemeral.port_ranges()
         + exclude_ranges
         + [SYSTEM_PORT_RANGE, (SYSTEM_PORT_RANGE[1], low), (high, 65536)]
