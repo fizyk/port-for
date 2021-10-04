@@ -2,6 +2,6 @@
 mock==4.0.3
 types-mock==4.0.1
 pytest==6.2.5  # tests framework used
-pytest-cov==2.12.1  # coverage reports to verify tests quality
+pytest-cov==3.0.0  # coverage reports to verify tests quality
 coverage==6.0 # pytest-cov
 -e .[tests]
