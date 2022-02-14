@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+unreleased
+----------
+
+Misc
+++++
+
+- Added Python 3.10 to trove classifiers and to CI
+
 0.6.1
 ----------
 
