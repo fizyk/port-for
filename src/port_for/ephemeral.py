@@ -45,10 +45,7 @@ def _bsd_ranges() -> List[Tuple[int, int]]:
     lines = stdout.decode("ascii").split("\n")
     out: Dict[str, str] = dict(
         [
-            [
-                x.strip().rsplit(".")[-1]  # type: ignore[misc]
-                for x in line.split(":")
-            ]
+            [x.strip().rsplit(".")[-1] for x in line.split(":")]
             for line in lines
             if line
         ]
