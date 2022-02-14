@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import tempfile
-import mock
+from unittest import mock
 import socket
 import os
 from typing import Union, List, Set, Tuple
