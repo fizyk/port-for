@@ -1,5 +1,5 @@
 # test runs requirements (versions we'll be testing against) - automatically updated
 pytest==7.1.2  # tests framework used
 pytest-cov==3.0.0  # coverage reports to verify tests quality
-coverage==6.4.1 # pytest-cov
+coverage==6.4.2 # pytest-cov
 -e .[tests]
