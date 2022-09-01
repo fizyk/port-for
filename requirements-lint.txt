@@ -2,6 +2,6 @@
 pycodestyle==2.9.1
 pydocstyle==6.1.1
 pygments
-black==22.6.0
+black==22.8.0
 mypy==0.971
 -r requirements-test.txt
