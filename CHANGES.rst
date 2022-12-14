@@ -1,6 +1,8 @@
 CHANGELOG
 =========
 
+.. towncrier release notes start
+
 0.6.2
 ----------
 

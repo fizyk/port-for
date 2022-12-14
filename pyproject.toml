@@ -2,6 +2,28 @@
 requires = ["setuptools >= 40.6.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.towncrier]
+directory = "newsfragments"
+single_file=true
+filename="CHANGES.rst"
+issue_format="`#{issue} <https://https://github.com/kmike/port-for/issues/{issue}>`_"
+
+[tool.towncrier.fragment.feature]
+name = "Features"
+showcontent = true
+
+[tool.towncrier.fragment.bugfix]
+name = "Bugfixes"
+showcontent = true
+
+[tool.towncrier.fragment.break]
+name = "Breaking changes"
+showcontent = true
+
+[tool.towncrier.fragment.misc]
+name = "Miscellaneus"
+showcontent = true
+
 [tool.black]
 line-length = 80
 target-version = ['py38']
