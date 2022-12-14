@@ -10,6 +10,7 @@ on:
       - 'Run tests'
       - 'Run tests on macos'
       - 'Test build package'
+      - 'Run test commands'
 
 jobs:
   merge-me:
