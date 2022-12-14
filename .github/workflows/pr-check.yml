@@ -2,7 +2,7 @@ name: Run test commands
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
 #  bump:
@@ -23,5 +23,5 @@ jobs:
         with:
           python-version: "3.11"
           pipenv-install-options: "--skip-lock"
-          command: towncrier check --compare-with origin/main
+          command: towncrier check --compare-with origin/master
           fetch-depth: 0

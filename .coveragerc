@@ -1,4 +1,4 @@
 [run]
 omit =
-    src/port_for/_download_ranges.py
-    src/port_for/docopt.py
+    port_for/_download_ranges.py
+    port_for/docopt.py
