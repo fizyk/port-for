@@ -1,2 +1,0 @@
-Moved as much of the setup.cfg settings into the pyproject.toml as possible.
-Dropped pydocstyle support.

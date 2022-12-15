@@ -1,2 +1,0 @@
-Moved development dependencies to be managed by pipenv.
-All development process can be managed  with it - which means automatic isolation.

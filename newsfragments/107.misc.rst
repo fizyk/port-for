@@ -1,1 +1,0 @@
-Use towncrier as a changelog management tool.
