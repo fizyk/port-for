@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-port-for is a command-line utility that
+cmd.py is a command-line utility that
 helps with local TCP ports management. It
 finds 'good' unused TCP localhost port and
 remembers the association.
@@ -47,7 +47,7 @@ def _unbind(app: str) -> None:
     store.unbind_port(app)
 
 
-if __name__ == "__main__":
+def main() -> None:
     args = docopt(
         __doc__,
         version="port-for %s" % port_for.__version__,
@@ -60,3 +60,7 @@ if __name__ == "__main__":
         _list()
     elif args["--unbind"]:
         _unbind(args["--unbind"])
+
+
+if __name__ == "__main__":
+    main()

@@ -159,3 +159,12 @@ Contributing
 Development happens at github: https://github.com/kmike/port-for/
 
 Issue tracker: https://github.com/kmike/port-for/issues/new
+
+Release
+=======
+
+Install pipenv and --dev dependencies first, Then run:
+
+.. code-block::
+
+    pipenv run tbump [NEW_VERSION]
