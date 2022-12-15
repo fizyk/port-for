@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""port_for package."""
 __version__ = "0.6.2"
 
 from ._ranges import UNASSIGNED_RANGES

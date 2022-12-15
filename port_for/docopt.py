@@ -4,12 +4,10 @@ import re
 
 
 class DocoptLanguageError(Exception):
-
     """Error in construction of usage-message by developer."""
 
 
 class DocoptExit(SystemExit):
-
     """Exit in case user invoked program with incorrect arguments."""
 
     usage = ""
@@ -447,7 +445,10 @@ def extras(help, version, options, doc):
 
 
 class Dict(dict):
+    """Dictionary with custom repr bbehaviour."""
+
     def __repr__(self):
+        """Dictionary representation for docopt."""
         return "{%s}" % ",\n ".join("%r: %r" % i for i in sorted(self.items()))
 
 
