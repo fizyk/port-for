@@ -61,6 +61,14 @@ def test_get_port_none() -> None:
     assert not get_port(-1)
 
 
+def test_get_port_exclude() -> None:
+    """Only one port is available at that range."""
+    assert 8002 == get_port(
+        (8000, 8010),
+        [8000, 8001, 8003, 8004, 8005, 8006, 8007, 8008, 8009, 8010],
+    )
+
+
 @pytest.mark.parametrize("port", (1234, "1234"))
 def test_get_port_specific(port: Union[str, int]) -> None:
     """Test special case for get_port to return same value."""
