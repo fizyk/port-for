@@ -9,7 +9,7 @@ on:
 
 jobs:
   tests:
-    uses: fizyk/actions-reuse/.github/workflows/tests-pytests.yml@v1.6.3
+    uses: fizyk/actions-reuse/.github/workflows/tests-pytests.yml@v2.1.2
     with:
       python-versions: '["3.7", "3.8", "3.9", "3.10", "3.11", "pypy-3.8"]'
       os: macos-latest
