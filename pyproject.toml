@@ -58,7 +58,7 @@ filterwarnings = "error"
 directory = "newsfragments"
 single_file=true
 filename="CHANGES.rst"
-issue_format="`#{issue} <https://https://github.com/kmike/port-for/issues/{issue}>`_"
+issue_format="`#{issue} <https://github.com/kmike/port-for/issues/{issue}>`_"
 
 [tool.towncrier.fragment.feature]
 name = "Features"
