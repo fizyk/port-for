@@ -3,6 +3,15 @@ CHANGELOG
 
 .. towncrier release notes start
 
+0.7.0 (2023-06-15)
+==================
+
+Features
+--------
+
+- get_port will now allow passing additional exclude_ports parameter - these ports will not be chosen. (`#143 <https://https://github.com/kmike/port-for/issues/143>`_)
+
+
 0.6.3 (2022-12-15)
 ==================
 

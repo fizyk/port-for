@@ -1,6 +1,6 @@
 [project]
 name = "port-for"
-version = "0.6.3"
+version = "0.7.0"
 description = "Utility that helps with local TCP ports management. It can find an unused TCP localhost port and remember the association."
 readme = "README.rst"
 keywords = ["port", "posix"]
@@ -33,7 +33,7 @@ requires-python = ">= 3.7"
 [project.urls]
 "Source" = "https://github.com/kmike/port-for/"
 "Bug Tracker" = "https://github.com/kmike/port-for/issues"
-"Changelog" = "https://github.com/kmike/port-for/blob/v0.6.3/CHANGES.rst"
+"Changelog" = "https://github.com/kmike/port-for/blob/v0.7.0/CHANGES.rst"
 
 [project.scripts]
 port-for = "port_for.cmd:main"
@@ -87,7 +87,7 @@ include = '.*\.pyi?$'
 # github_url = "https://github.com/<user or organization>/<project>/"
 
 [tool.tbump.version]
-current = "0.6.3"
+current = "0.7.0"
 
 # Example of a semver regexp.
 # Make sure this matches current_version before
