@@ -147,26 +147,28 @@ def get_port(
         List[Set[int]],
         List[Union[Set[int], Tuple[int, int]]],
         List[Union[str, int, Tuple[int, int], Set[int]]],
-    ]
+    ],
+    exclude_ports: Optional[Iterable[int]] = None,
 ) -> Optional[int]:
     """
     Retuns a random available port. If there's only one port passed
     (e.g. 5000 or '5000') function does not check if port is available.
     If there's -1 passed as an argument, function returns None.
 
-    :param str|int|tuple|set|list ports:
+    :param ports:
         exact port (e.g. '8000', 8000)
         randomly selected port (None) - any random available port
         [(2000,3000)] or (2000,3000) - random available port from a given range
         [{4002,4003}] or {4002,4003} - random of 4002 or 4003 ports
         [(2000,3000), {4002,4003}] -random of given range and set
+    :param exclude_ports: A set of known ports that can not be selected.
     :returns: a random free port
     :raises: ValueError
     """
     if ports == -1:
         return None
     elif not ports:
-        return select_random(None)
+        return select_random(None, exclude_ports)
 
     try:
         return int(ports)  # type: ignore[arg-type]
@@ -200,4 +202,4 @@ def get_port(
             % (ports,)
         )
 
-    return select_random(ports_set)
+    return select_random(ports_set, exclude_ports)
