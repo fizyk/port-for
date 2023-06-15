@@ -11,7 +11,7 @@ on:
     branches: [ master ]
 jobs:
   lint:
-    uses: fizyk/actions-reuse/.github/workflows/linters-python.yml@v1.6.3
+    uses: fizyk/actions-reuse/.github/workflows/linters-python.yml@v2.1.2
     with:
       pipenv: true
       mypy: true
