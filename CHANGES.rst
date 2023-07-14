@@ -3,6 +3,15 @@ CHANGELOG
 
 .. towncrier release notes start
 
+0.7.1 (2023-07-14)
+==================
+
+Features
+--------
+
+- Add `PortType` type alias for easier typing related code (`#149 <https://github.com/kmike/port-for/issues/149>`_)
+
+
 0.7.0 (2023-06-15)
 ==================
 
