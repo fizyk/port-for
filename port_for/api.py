@@ -134,20 +134,22 @@ def filter_by_type(lst: Iterable, type_of: Type[T]) -> List[T]:
     return [e for e in lst if isinstance(e, type_of)]
 
 
+PortType = Union[
+    str,
+    int,
+    Tuple[int, int],
+    Set[int],
+    List[str],
+    List[int],
+    List[Tuple[int, int]],
+    List[Set[int]],
+    List[Union[Set[int], Tuple[int, int]]],
+    List[Union[str, int, Tuple[int, int], Set[int]]],
+]
+
+
 def get_port(
-    ports: Union[
-        None,
-        str,
-        int,
-        Tuple[int, int],
-        Set[int],
-        List[str],
-        List[int],
-        List[Tuple[int, int]],
-        List[Set[int]],
-        List[Union[Set[int], Tuple[int, int]]],
-        List[Union[str, int, Tuple[int, int], Set[int]]],
-    ],
+    ports: Optional[PortType],
     exclude_ports: Optional[Iterable[int]] = None,
 ) -> Optional[int]:
     """
