@@ -8,7 +8,6 @@ on:
       # List all required workflow names here.
       - 'Run linters'
       - 'Run tests'
-      - 'Run tests on macos'
       - 'Test build package'
       - 'Run test commands'
 
