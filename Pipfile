@@ -13,4 +13,4 @@ coverage = "==7.3.1"
 black = {version = "==23.9.1", markers="python_version >= '3.8'"}
 pycodestyle = "==2.11.0"
 mypy = "==1.5.1"
-tbump = "==6.10.0"
+tbump = "==6.11.0"
