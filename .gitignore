@@ -11,3 +11,6 @@ htmlcov
 MANIFEST
 coverage
 venv/
+
+# Managed by github-actions (cache + artifact) per python version - see pipeline artifacts
+Pipfile.lock
