@@ -98,6 +98,10 @@ select = [
     "I",   # isort
     "D",   # pydocstyle
 ]
+exclude = [
+    "port_for/docopt.py",
+    "port_for/_download_ranges.py"
+]
 
 
 [tool.tbump]
