@@ -1,14 +1,15 @@
-# -*- coding: utf-8 -*-
+"""main port-for functionality."""
 import contextlib
-import socket
 import errno
 import random
+import socket
 from itertools import chain
-from typing import Optional, Set, List, Tuple, Iterable, TypeVar, Type, Union
+from typing import Iterable, List, Optional, Set, Tuple, Type, TypeVar, Union
+
 from port_for import ephemeral, utils
+
 from ._ranges import UNASSIGNED_RANGES
 from .exceptions import PortForException
-
 
 SYSTEM_PORT_RANGE = (0, 1024)
 
@@ -17,9 +18,7 @@ def select_random(
     ports: Optional[Set[int]] = None,
     exclude_ports: Optional[Iterable[int]] = None,
 ) -> int:
-    """
-    Returns random unused port number.
-    """
+    """Return random unused port number."""
     if ports is None:
         ports = available_good_ports()
 
@@ -35,9 +34,7 @@ def select_random(
 
 
 def is_available(port: int) -> bool:
-    """
-    Returns if port is good to choose.
-    """
+    """Return if port is good to choose."""
     return port in available_ports() and not port_is_used(port)
 
 
@@ -46,9 +43,12 @@ def available_ports(
     high: int = 65535,
     exclude_ranges: Optional[List[Tuple[int, int]]] = None,
 ) -> Set[int]:
-    """
-    Returns a set of possible ports (excluding system,
-    ephemeral and well-known ports).
+    """Return a set of possible ports.
+
+    .. note::
+
+        Excluding system, ephemeral and well-known ports.
+
     Pass ``high`` and/or ``low`` to limit the port range.
     """
     if exclude_ranges is None:
@@ -74,8 +74,8 @@ def available_ports(
 def good_port_ranges(
     ports: Optional[Set[int]] = None, min_range_len: int = 20, border: int = 3
 ) -> List[Tuple[int, int]]:
-    """
-    Returns a list of 'good' port ranges.
+    """Return a list of 'good' port ranges.
+
     Such ranges are large and don't contain ephemeral or well-known ports.
     Ranges borders are also excluded.
     """
@@ -94,14 +94,16 @@ def good_port_ranges(
 
 
 def available_good_ports(min_range_len: int = 20, border: int = 3) -> Set[int]:
+    """List available good ports."""
     return utils.ranges_to_set(
         good_port_ranges(min_range_len=min_range_len, border=border)
     )
 
 
 def port_is_used(port: int, host: str = "127.0.0.1") -> bool:
-    """
-    Returns if port is used. Port is considered used if the current process
+    """Return if port is used.
+
+    Port is considered used if the current process
     can't bind to it or the port doesn't refuse connections.
     """
     unused = _can_bind(port, host) and _refuses_connection(port, host)
@@ -130,7 +132,7 @@ T = TypeVar("T")
 
 
 def filter_by_type(lst: Iterable, type_of: Type[T]) -> List[T]:
-    """Returns a list of elements with given type."""
+    """Return a list of elements with given type."""
     return [e for e in lst if isinstance(e, type_of)]
 
 
@@ -152,9 +154,10 @@ def get_port(
     ports: Optional[PortType],
     exclude_ports: Optional[Iterable[int]] = None,
 ) -> Optional[int]:
-    """
-    Retuns a random available port. If there's only one port passed
-    (e.g. 5000 or '5000') function does not check if port is available.
+    """Retun a random available port.
+
+    If there's only one port passed (e.g. 5000 or '5000') function
+    does not check if port is available.
     If there's -1 passed as an argument, function returns None.
 
     :param ports:

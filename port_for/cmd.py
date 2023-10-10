@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-"""
-cmd.py is a command-line utility that helps with local TCP ports management.
+"""cmd.py is a command-line utility that helps with local TCP ports management.
 
 It finds 'good' unused TCP localhost port and remembers the association.
 
@@ -26,6 +25,7 @@ Options:
 
 import sys
 from typing import Optional
+
 import port_for
 from port_for.docopt import docopt
 

@@ -1,0 +1,3 @@
+Reformatted code with ruff and black.
+
+Ruff skips docopt and _download_ranges module for the time being.

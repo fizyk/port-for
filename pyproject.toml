@@ -90,6 +90,19 @@ line-length = 80
 target-version = ['py38']
 include = '.*\.pyi?$'
 
+[tool.ruff]
+line-length = 80
+select = [
+    "E",   # pycodestyle
+    "F",   # pyflakes
+    "I",   # isort
+    "D",   # pydocstyle
+]
+exclude = [
+    "port_for/docopt.py",
+    "port_for/_download_ranges.py"
+]
+
 
 [tool.tbump]
 # Uncomment this if your project is hosted on GitHub:

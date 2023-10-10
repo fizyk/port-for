@@ -1,22 +1,25 @@
-# -*- coding: utf-8 -*-
+"""PortStore implementation."""
 import os
-from configparser import ConfigParser, DEFAULTSECT
-from typing import Optional, List, Tuple, Union
+from configparser import DEFAULTSECT, ConfigParser
+from typing import List, Optional, Tuple, Union
 
 from .api import select_random
 from .exceptions import PortForException
-
 
 DEFAULT_CONFIG_PATH = "/etc/port-for.conf"
 
 
 class PortStore(object):
+    """PortStore binds, reads and stores bound ports in config."""
+
     def __init__(self, config_filename: str = DEFAULT_CONFIG_PATH):
+        """Initialize PortStore."""
         self._config = config_filename
 
     def bind_port(
         self, app: str, port: Optional[Union[int, str]] = None
     ) -> int:
+        """Binds port to app in the config."""
         if "=" in app or ":" in app:
             raise Exception('invalid app name: "%s"' % app)
 
@@ -61,11 +64,13 @@ class PortStore(object):
         return int(requested_port)
 
     def unbind_port(self, app: str) -> None:
+        """Remove port assignement to application."""
         parser = self._get_parser()
         parser.remove_option(DEFAULTSECT, app)
         self._save(parser)
 
     def bound_ports(self) -> List[Tuple[str, int]]:
+        """List all bound ports."""
         return [
             (app, int(port))
             for app, port in self._get_parser().items(DEFAULTSECT)

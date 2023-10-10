@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
+"""Port for utils."""
 import itertools
-from typing import Iterable, Iterator, Tuple, Set
+from typing import Iterable, Iterator, Set, Tuple
 
 
 def ranges_to_set(lst: Iterable[Tuple[int, int]]) -> Set[int]:
-    """
-    Convert a list of ranges to a set of numbers::
+    """Convert a list of ranges to a set of numbers.
 
     >>> ranges = [(1,3), (5,6)]
     >>> sorted(list(ranges_to_set(ranges)))
@@ -16,8 +15,7 @@ def ranges_to_set(lst: Iterable[Tuple[int, int]]) -> Set[int]:
 
 
 def to_ranges(lst: Iterable[int]) -> Iterator[Tuple[int, int]]:
-    """
-    Convert a list of numbers to a list of ranges::
+    """Convert a list of numbers to a list of ranges.
 
     >>> numbers = [1,2,3,5,6]
     >>> list(to_ranges(numbers))

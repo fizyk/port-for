@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-
-"""
-This module provide utilities to find ephemeral port ranges for the current OS.
+"""Module provide utilities to find ephemeral port ranges for the current OS.
+
 See http://www.ncftp.com/ncftpd/doc/misc/ephemeral_ports.html for more info
 about ephemeral port ranges.
 
 Currently only Linux and BSD (including OS X) are supported.
 """
 import subprocess
-from typing import List, Tuple, Dict
+from typing import Dict, List, Tuple
 
 DEFAULT_EPHEMERAL_PORT_RANGE = (32768, 65535)
 
 
 def port_ranges() -> List[Tuple[int, int]]:
-    """
-    Returns a list of ephemeral port ranges for current machine.
-    """
+    """Return a list of ephemeral port ranges for current machine."""
     try:
         return _linux_ranges()
     except (OSError, IOError):  # not linux, try BSD
