@@ -3,6 +3,27 @@ CHANGELOG
 
 .. towncrier release notes start
 
+0.7.2 (2023-10-10)
+==================
+
+Breaking changes
+----------------
+
+- Drop support for python 3.7 (`#155 <https://github.com/kmike/port-for/issues/155>`__)
+
+
+Features
+--------
+
+- Support Python 3.12 (`#169 <https://github.com/kmike/port-for/issues/169>`__)
+
+
+Miscellaneus
+------------
+
+- `#152 <https://github.com/kmike/port-for/issues/152>`__, `#166 <https://github.com/kmike/port-for/issues/166>`__, `#170 <https://github.com/kmike/port-for/issues/170>`__
+
+
 0.7.1 (2023-07-14)
 ==================
 
