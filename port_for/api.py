@@ -185,9 +185,7 @@ def get_port(
     try:
         if not isinstance(ports, list):
             ports = [ports]
-        ranges: Set[int] = utils.ranges_to_set(
-            filter_by_type(ports, tuple)  # type: ignore[arg-type]
-        )
+        ranges: Set[int] = utils.ranges_to_set(filter_by_type(ports, tuple))
         nums: Set[int] = set(filter_by_type(ports, int))
         sets: Set[int] = set(
             chain(
