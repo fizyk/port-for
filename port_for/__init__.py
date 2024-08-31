@@ -4,6 +4,7 @@ __version__ = "0.7.2"
 
 from ._ranges import UNASSIGNED_RANGES
 from .api import (
+    PortType,
     available_good_ports,
     available_ports,
     get_port,
@@ -25,5 +26,6 @@ __all__ = (
     "select_random",
     "get_port",
     "PortStore",
+    "PortType",
     "PortForException",
 )
