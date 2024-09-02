@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """port_for package."""
-__version__ = "0.7.2"
+__version__ = "0.7.3"
 
 from ._ranges import UNASSIGNED_RANGES
 from .api import (

@@ -3,6 +3,21 @@ CHANGELOG
 
 .. towncrier release notes start
 
+0.7.3 (2024-09-02)
+==================
+
+Features
+--------
+
+- Adds PortType to package __all__
+
+
+Miscellaneus
+------------
+
+- `#184 <https://github.com/kmike/port-for/issues/184>`__
+
+
 0.7.2 (2023-10-10)
 ==================
 
