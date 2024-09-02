@@ -1,4 +1,5 @@
 """PortStore implementation."""
+
 import os
 from configparser import DEFAULTSECT, ConfigParser
 from typing import List, Optional, Tuple, Union

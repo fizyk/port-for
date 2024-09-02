@@ -1,4 +1,5 @@
 """Port for utils."""
+
 import itertools
 from typing import Iterable, Iterator, Set, Tuple
 
