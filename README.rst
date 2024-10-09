@@ -6,8 +6,8 @@ port-for
    :target: https://pypi.python.org/pypi/port-for
    :alt: PyPI Version
 
-.. image:: http://codecov.io/github/kmike/port-for/coverage.svg?branch=master
-   :target: http://codecov.io/github/kmike/port-for?branch=master
+.. image:: http://codecov.io/github/fizyk/port-for/coverage.svg?branch=master
+   :target: http://codecov.io/github/fizyk/port-for?branch=master
    :alt: Code Coverage
 
 
