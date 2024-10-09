@@ -3,12 +3,21 @@ port-for
 ========
 
 .. image:: https://img.shields.io/pypi/v/port-for.svg
-   :target: https://pypi.python.org/pypi/port-for
-   :alt: PyPI Version
+    :target: https://pypi.python.org/pypi/port-for/
+    :alt: Latest PyPI version
 
-.. image:: http://codecov.io/github/fizyk/port-for/coverage.svg?branch=master
-   :target: http://codecov.io/github/fizyk/port-for?branch=master
-   :alt: Code Coverage
+.. image:: https://img.shields.io/pypi/wheel/port-for.svg
+    :target: https://pypi.python.org/pypi/port-for/
+    :alt: Wheel Status
+
+.. image:: https://img.shields.io/pypi/pyversions/port-for.svg
+    :target: https://pypi.python.org/pypi/port-for/
+    :alt: Supported Python Versions
+
+.. image:: https://img.shields.io/pypi/l/port-for.svg
+    :target: https://pypi.python.org/pypi/port-for/
+    :alt: License
+
 
 
 ``port-for`` is a command-line utility and a python library that
