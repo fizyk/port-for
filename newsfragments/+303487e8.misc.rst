@@ -1,1 +1,0 @@
-Updated black installation to not install on python version older than 3.12
