@@ -9,7 +9,7 @@ name = "pypi"
 towncrier = "==24.8.0"
 pytest = "==8.3.4"
 pytest-cov = "==6.0.0"
-coverage = "==7.6.8"
+coverage = "==7.6.9"
 black = {version = "==24.10.0", markers="python_version >= '3.12'"}
 mypy = "==1.13.0"
 tbump = "==6.11.0"
