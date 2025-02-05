@@ -11,6 +11,6 @@ pytest = "==8.3.4"
 pytest-cov = "==6.0.0"
 coverage = "==7.6.10"
 black = {version = "==25.1.0", markers="python_version >= '3.12'"}
-mypy = "==1.14.1"
+mypy = "==1.15.0"
 tbump = "==6.11.0"
 ruff = "==0.9.4"
