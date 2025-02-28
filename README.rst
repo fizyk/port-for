@@ -165,9 +165,9 @@ Dig into source code for more.
 Contributing
 ============
 
-Development happens at github: https://github.com/kmike/port-for/
+Development happens at github: https://github.com/fizyk/port-for/
 
-Issue tracker: https://github.com/kmike/port-for/issues/new
+Issue tracker: https://github.com/fizyk/port-for/issues/new
 
 Release
 =======
