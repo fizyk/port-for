@@ -8,7 +8,7 @@ name = "pypi"
 [dev-packages]
 towncrier = "==24.8.0"
 pytest = "==8.3.5"
-pytest-cov = "==6.1.0"
+pytest-cov = "==6.1.1"
 coverage = "==7.8.0"
 mypy = "==1.15.0"
 tbump = "==6.11.0"
