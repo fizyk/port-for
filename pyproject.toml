@@ -86,13 +86,11 @@ directory = "misc"
 name = "Miscellaneus"
 showcontent = false
 
-[tool.black]
-line-length = 80
-target-version = ['py39']
-include = '.*\.pyi?$'
-
 [tool.ruff]
 line-length = 80
+target-version = 'py39'
+
+[tool.ruff.lint]
 select = [
     "E",   # pycodestyle
     "F",   # pyflakes
