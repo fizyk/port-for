@@ -191,7 +191,8 @@ def get_port(
         sets: Set[int] = set(
             chain(
                 *filter_by_type(
-                    ports, (set, frozenset)  # type: ignore[arg-type]
+                    ports,
+                    (set, frozenset),  # type: ignore[arg-type]
                 )
             )
         )
