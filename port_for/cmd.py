@@ -50,8 +50,9 @@ def main() -> None:
     """port-for executable entrypoint."""
     args = docopt(
         __doc__,
+        argv=sys.argv[1:],
         version="port-for %s" % port_for.__version__,
-    )  # type: ignore[no-untyped-call]
+    )
     if args["<NAME>"]:
         _bind(args["<NAME>"], args["--port"])
     elif args["--bind"]:
