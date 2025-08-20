@@ -88,7 +88,7 @@ def test_get_port_specific(port: Union[str, int]) -> None:
     ),
 )
 def test_get_port_from_range(
-    port_range: Union[List[Tuple[int, int]], Tuple[int, int]],
+    port_range: Union[list[tuple[int, int]], tuple[int, int]],
 ) -> None:
     """Test getting random port from given range."""
     assert get_port(port_range) in list(range(2000, 3000 + 1))
@@ -101,7 +101,7 @@ def test_get_port_from_range(
         {4001, 4002, 4003},
     ),
 )
-def test_get_port_from_set(port_set: Union[List[Set[int]], Set[int]]) -> None:
+def test_get_port_from_set(port_set: Union[list[set[int]], set[int]]) -> None:
     """Test getting random port from given set."""
     assert get_port(port_set) in {4001, 4002, 4003}
 

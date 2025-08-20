@@ -1,6 +1,8 @@
+import typing
 from copy import copy
 import sys
 import re
+from typing import List
 
 
 class DocoptLanguageError(Exception):
@@ -12,11 +14,11 @@ class DocoptExit(SystemExit):
 
     usage = ""
 
-    def __init__(self, message=""):
-        SystemExit.__init__(self, (message + "\n" + self.usage).strip())
+    def __init__(self, message: str = "") -> None:
+        super().__init__(self, (message + "\n" + self.usage).strip())
 
 
-class Pattern(object):
+class Pattern:
     def __init__(self, *children):
         self.children = list(children)
 
@@ -38,7 +40,7 @@ class Pattern(object):
             return [self]
         return sum([c.flat for c in self.children], [])
 
-    def fix(self):
+    def fix(self) -> typing.Self:
         self.fix_identities()
         self.fix_list_arguments()
         return self
@@ -203,7 +205,9 @@ class AnyOptions(Pattern):
 
 
 class Required(Pattern):
-    def match(self, left, collected=None):
+    def match(
+        self, left: list, collected: list | None = None
+    ) -> tuple[bool, list, list]:
         collected = [] if collected is None else collected
         copied_left = copy(left)
         c = copy(collected)
@@ -335,7 +339,7 @@ def parse_shorts(tokens, options):
     return parsed
 
 
-def parse_pattern(source, options):
+def parse_pattern(source: str, options: list[Option]) -> Required:
     tokens = TokenStream(
         re.sub(r"([\[\]\(\)\|]|\.\.\.)", r" \1 ", source), DocoptLanguageError
     )
@@ -401,7 +405,7 @@ def parse_atom(tokens, options):
         return [Command(tokens.move())]
 
 
-def parse_args(source, options):
+def parse_args(source: List, options: list[Option]) -> list:
     tokens = TokenStream(source, DocoptExit)
     options = copy(options)
     parsed = []
@@ -430,12 +434,14 @@ def printable_usage(doc):
     return re.split(r"\n\s*\n", "".join(usage_split[1:]))[0].strip()
 
 
-def formal_usage(printable_usage):
+def formal_usage(printable_usage: str) -> str:
     pu = printable_usage.split()[1:]  # split and drop "usage:"
     return " ".join("|" if s == pu[0] else s for s in pu[1:])
 
 
-def extras(help, version, options, doc):
+def extras(
+    help: bool, version: typing.Optional[str], options: list, doc: str
+) -> None:
     if help and any((o.name in ("-h", "--help")) and o.value for o in options):
         print(doc.strip())
         exit()
@@ -444,15 +450,18 @@ def extras(help, version, options, doc):
         exit()
 
 
+# TODO: repr doesn't seem to be used
 class Dict(dict):
-    """Dictionary with custom repr bbehaviour."""
+    """Dictionary with custom repr behaviour."""
 
     def __repr__(self):
         """Dictionary representation for docopt."""
         return "{%s}" % ",\n ".join("%r: %r" % i for i in sorted(self.items()))
 
 
-def docopt(doc, argv=sys.argv[1:], help=True, version=None):
+def docopt(
+    doc, argv: List, help: bool = True, version: typing.Optional[str] = None
+) -> Dict:
     DocoptExit.usage = docopt.usage = usage = printable_usage(doc)
     pot_options = parse_doc_options(doc)
     formal_pattern = parse_pattern(formal_usage(usage), options=pot_options)
