@@ -12,10 +12,8 @@ class DocoptLanguageError(Exception):
 class DocoptExit(SystemExit):
     """Exit in case user invoked program with incorrect arguments."""
 
-    usage = ""
-
-    def __init__(self, message: str = "") -> None:
-        super().__init__(self, (message + "\n" + self.usage).strip())
+    def __init__(self, usage: str, message: str = "") -> None:
+        super().__init__(self, (message + "\n" + usage).strip())
 
 
 class Pattern:
@@ -421,11 +419,11 @@ def parse_args(source: List, options: list[Option]) -> list:
     return parsed
 
 
-def parse_doc_options(doc):
+def parse_doc_options(doc: str) -> list[Option]:
     return [Option.parse("-" + s) for s in re.split("^ *-|\n *-", doc)[1:]]
 
 
-def printable_usage(doc):
+def printable_usage(doc: str) -> str:
     usage_split = re.split(r"([Uu][Ss][Aa][Gg][Ee]:)", doc)
     if len(usage_split) < 3:
         raise DocoptLanguageError('"usage:" (case-insensitive) not found.')
@@ -460,9 +458,12 @@ class Dict(dict):
 
 
 def docopt(
-    doc, argv: List, help: bool = True, version: typing.Optional[str] = None
+    doc: str,
+    argv: List,
+    help: bool = True,
+    version: typing.Optional[str] = None,
 ) -> Dict:
-    DocoptExit.usage = docopt.usage = usage = printable_usage(doc)
+    usage = printable_usage(doc)
     pot_options = parse_doc_options(doc)
     formal_pattern = parse_pattern(formal_usage(usage), options=pot_options)
     argv = parse_args(argv, options=pot_options)
@@ -477,4 +478,4 @@ def docopt(
             (a.name, a.value)
             for a in (pot_options + options + pot_arguments + arguments)
         )
-    raise DocoptExit()
+    raise DocoptExit(usage)
