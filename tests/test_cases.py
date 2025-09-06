@@ -112,11 +112,12 @@ def test_port_mix() -> None:
         (2000, 3000),
         {4001, 4002, 4003},
     ]
-    assert get_port(sets_and_ranges) in set(range(2000, 3000 + 1)) and {
+    want_set = set(range(2000, 3000 + 1)) | {
         4001,
         4002,
         4003,
     }
+    assert get_port(sets_and_ranges) in want_set
 
 
 class SelectPortTest(unittest.TestCase):
