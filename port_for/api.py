@@ -5,7 +5,7 @@ import errno
 import random
 import socket
 from itertools import chain
-from typing import Iterable, List, Optional, Set, Tuple, Type, TypeVar, Union
+from typing import Iterable, Optional, Type, TypeVar, Union
 
 from port_for import ephemeral, utils
 
@@ -16,7 +16,7 @@ SYSTEM_PORT_RANGE = (0, 1024)
 
 
 def select_random(
-    ports: Optional[Set[int]] = None,
+    ports: Optional[set[int]] = None,
     exclude_ports: Optional[Iterable[int]] = None,
 ) -> int:
     """Return random unused port number."""
@@ -42,8 +42,8 @@ def is_available(port: int) -> bool:
 def available_ports(
     low: int = 1024,
     high: int = 65535,
-    exclude_ranges: Optional[List[Tuple[int, int]]] = None,
-) -> Set[int]:
+    exclude_ranges: Optional[list[tuple[int, int]]] = None,
+) -> set[int]:
     """Return a set of possible ports.
 
     .. note::
@@ -73,8 +73,8 @@ def available_ports(
 
 
 def good_port_ranges(
-    ports: Optional[Set[int]] = None, min_range_len: int = 20, border: int = 3
-) -> List[Tuple[int, int]]:
+    ports: Optional[set[int]] = None, min_range_len: int = 20, border: int = 3
+) -> list[tuple[int, int]]:
     """Return a list of 'good' port ranges.
 
     Such ranges are large and don't contain ephemeral or well-known ports.
@@ -94,7 +94,7 @@ def good_port_ranges(
     return without_borders
 
 
-def available_good_ports(min_range_len: int = 20, border: int = 3) -> Set[int]:
+def available_good_ports(min_range_len: int = 20, border: int = 3) -> set[int]:
     """List available good ports."""
     return utils.ranges_to_set(
         good_port_ranges(min_range_len=min_range_len, border=border)
@@ -132,7 +132,7 @@ def _refuses_connection(port: int, host: str) -> bool:
 T = TypeVar("T")
 
 
-def filter_by_type(lst: Iterable, type_of: Type[T]) -> List[T]:
+def filter_by_type(lst: Iterable, type_of: Type[T]) -> list[T]:
     """Return a list of elements with given type."""
     return [e for e in lst if isinstance(e, type_of)]
 
@@ -140,14 +140,14 @@ def filter_by_type(lst: Iterable, type_of: Type[T]) -> List[T]:
 PortType = Union[
     str,
     int,
-    Tuple[int, int],
-    Set[int],
-    List[str],
-    List[int],
-    List[Tuple[int, int]],
-    List[Set[int]],
-    List[Union[Set[int], Tuple[int, int]]],
-    List[Union[str, int, Tuple[int, int], Set[int]]],
+    tuple[int, int],
+    set[int],
+    list[str],
+    list[int],
+    list[tuple[int, int]],
+    list[set[int]],
+    list[Union[set[int], tuple[int, int]]],
+    list[Union[str, int, tuple[int, int], set[int]]],
 ]
 
 
@@ -181,14 +181,14 @@ def get_port(
     except TypeError:
         pass
 
-    ports_set: Set[int] = set()
+    ports_set: set[int] = set()
 
     try:
         if not isinstance(ports, list):
             ports = [ports]
-        ranges: Set[int] = utils.ranges_to_set(filter_by_type(ports, tuple))
-        nums: Set[int] = set(filter_by_type(ports, int))
-        sets: Set[int] = set(
+        ranges: set[int] = utils.ranges_to_set(filter_by_type(ports, tuple))
+        nums: set[int] = set(filter_by_type(ports, int))
+        sets: set[int] = set(
             chain(
                 *filter_by_type(
                     ports,

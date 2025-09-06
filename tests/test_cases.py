@@ -4,7 +4,7 @@ import os
 import socket
 import tempfile
 import unittest
-from typing import List, Set, Tuple, Union
+from typing import Union
 from unittest import mock
 
 import pytest
@@ -88,7 +88,7 @@ def test_get_port_specific(port: Union[str, int]) -> None:
     ),
 )
 def test_get_port_from_range(
-    port_range: Union[List[Tuple[int, int]], Tuple[int, int]],
+    port_range: Union[list[tuple[int, int]], tuple[int, int]],
 ) -> None:
     """Test getting random port from given range."""
     assert get_port(port_range) in list(range(2000, 3000 + 1))
@@ -101,23 +101,22 @@ def test_get_port_from_range(
         {4001, 4002, 4003},
     ),
 )
-def test_get_port_from_set(port_set: Union[List[Set[int]], Set[int]]) -> None:
+def test_get_port_from_set(port_set: Union[list[set[int]], set[int]]) -> None:
     """Test getting random port from given set."""
     assert get_port(port_set) in {4001, 4002, 4003}
 
 
 def test_port_mix() -> None:
     """Test getting random port from given set and range."""
-    sets_and_ranges: List[Union[Tuple[int, int], Set[int]]] = [
+    sets_and_ranges: list[Union[tuple[int, int], set[int]]] = [
         (2000, 3000),
         {4001, 4002, 4003},
     ]
-    want_set = set(range(2000, 3000 + 1)) | {
+    assert get_port(sets_and_ranges) in set(range(2000, 3000 + 1)) and {
         4001,
         4002,
         4003,
     }
-    assert get_port(sets_and_ranges) in want_set
 
 
 class SelectPortTest(unittest.TestCase):

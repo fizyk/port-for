@@ -10,7 +10,7 @@ import re
 import datetime
 from urllib.request import Request, urlopen
 from xml.etree import ElementTree
-from typing import Set, Iterator, Iterable, Tuple
+from typing import Iterator, Iterable
 
 from port_for.utils import to_ranges, ranges_to_set
 
@@ -43,14 +43,14 @@ def _write_unassigned_ranges(out_filename: str) -> None:
         f.write("]\n")
 
 
-def _unassigned_ports() -> Set[int]:
+def _unassigned_ports() -> set[int]:
     """Return a set of all unassigned ports (according to IANA and Wikipedia)"""
     free_ports = ranges_to_set(_parse_ranges(_iana_unassigned_port_ranges()))
     known_ports = ranges_to_set(_wikipedia_known_port_ranges())
     return free_ports.difference(known_ports)
 
 
-def _wikipedia_known_port_ranges() -> Iterator[Tuple[int, int]]:
+def _wikipedia_known_port_ranges() -> Iterator[tuple[int, int]]:
     """
     Returns used port ranges according to Wikipedia page.
     This page contains unofficial well-known ports.
@@ -82,7 +82,7 @@ def _iana_unassigned_port_ranges() -> Iterator[str]:
             yield numbers
 
 
-def _parse_ranges(ranges: Iterable[str]) -> Iterator[Tuple[int, int]]:
+def _parse_ranges(ranges: Iterable[str]) -> Iterator[tuple[int, int]]:
     """Converts a list of string ranges to a list of [low, high] tuples."""
     for txt in ranges:
         if "-" in txt:

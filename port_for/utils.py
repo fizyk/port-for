@@ -1,10 +1,10 @@
 """Port for utils."""
 
 import itertools
-from typing import Iterable, Iterator, Set, Tuple
+from typing import Iterable, Iterator
 
 
-def ranges_to_set(lst: Iterable[Tuple[int, int]]) -> Set[int]:
+def ranges_to_set(lst: Iterable[tuple[int, int]]) -> set[int]:
     """Convert a list of ranges to a set of numbers.
 
     >>> ranges = [(1,3), (5,6)]
@@ -15,7 +15,7 @@ def ranges_to_set(lst: Iterable[Tuple[int, int]]) -> Set[int]:
     return set(itertools.chain(*(range(x[0], x[1] + 1) for x in lst)))
 
 
-def to_ranges(lst: Iterable[int]) -> Iterator[Tuple[int, int]]:
+def to_ranges(lst: Iterable[int]) -> Iterator[tuple[int, int]]:
     """Convert a list of numbers to a list of ranges.
 
     >>> numbers = [1,2,3,5,6]

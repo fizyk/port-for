@@ -2,7 +2,7 @@
 
 import os
 from configparser import DEFAULTSECT, ConfigParser
-from typing import List, Optional, Tuple, Union
+from typing import Optional, Union
 
 from .api import select_random
 from .exceptions import PortForException
@@ -10,7 +10,7 @@ from .exceptions import PortForException
 DEFAULT_CONFIG_PATH = "/etc/port-for.conf"
 
 
-class PortStore(object):
+class PortStore:
     """PortStore binds, reads and stores bound ports in config."""
 
     def __init__(self, config_filename: str = DEFAULT_CONFIG_PATH):
@@ -70,7 +70,7 @@ class PortStore(object):
         parser.remove_option(DEFAULTSECT, app)
         self._save(parser)
 
-    def bound_ports(self) -> List[Tuple[str, int]]:
+    def bound_ports(self) -> list[tuple[str, int]]:
         """List all bound ports."""
         return [
             (app, int(port))
