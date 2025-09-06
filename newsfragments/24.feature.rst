@@ -1,3 +1,0 @@
-Replaced docopt with argparse.
-
-Package got a bit smaller as a result.
