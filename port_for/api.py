@@ -1,7 +1,6 @@
 """main port-for functionality."""
 
 import contextlib
-import errno
 import random
 import socket
 from itertools import chain
@@ -85,30 +84,28 @@ def good_port_ranges(
         ports = available_ports()
     ranges = utils.to_ranges(list(ports))
     lenghts = sorted([(r[1] - r[0], r) for r in ranges], reverse=True)
-    long_ranges = [
-        length[1] for length in lenghts if length[0] >= min_range_len
-    ]
-    without_borders = [
-        (low + border, high - border) for low, high in long_ranges
-    ]
+    long_ranges = [length[1] for length in lenghts if length[0] >= min_range_len]
+    without_borders = [(low + border, high - border) for low, high in long_ranges]
     return without_borders
 
 
 def available_good_ports(min_range_len: int = 20, border: int = 3) -> set[int]:
     """List available good ports."""
-    return utils.ranges_to_set(
-        good_port_ranges(min_range_len=min_range_len, border=border)
-    )
+    return utils.ranges_to_set(good_port_ranges(min_range_len=min_range_len, border=border))
 
 
 def port_is_used(port: int, host: str = "127.0.0.1") -> bool:
     """Return if port is used.
 
-    Port is considered used if the current process
-    can't bind to it or the port doesn't refuse connections.
+    If we can connect to the port or we cannot bind to it, it's used.
     """
-    unused = _can_bind(port, host) and _refuses_connection(port, host)
-    return not unused
+    # Used if something is listening on the port, and we can connect to it
+    if _accepts_connection(port, host):
+        return True
+    # Used if we cannot bind to the port.
+    if not _can_bind(port, host):
+        return True
+    return False
 
 
 def _can_bind(port: int, host: str) -> bool:
@@ -121,13 +118,20 @@ def _can_bind(port: int, host: str) -> bool:
     return True
 
 
-def _refuses_connection(port: int, host: str) -> bool:
+def _accepts_connection(port: int, host: str) -> bool:
+    """Return True if connect_ex succeeds (service is listening).
+
+    Works reliably across platforms, including Windows.
+    """
     sock = socket.socket()
     with contextlib.closing(sock):
         sock.settimeout(1)
         sock.setblocking(True)
         err = sock.connect_ex((host, port))
-        return err == errno.ECONNREFUSED
+        # Relying on ECONNREFUSED does not produce reliable results on windows,
+        # which could result in either ECONREFUSED (Mapped in windows to `WSAECONNREFUSED`),
+        # timeout or return any other error.
+        return err == 0
 
 
 T = TypeVar("T")
@@ -204,8 +208,7 @@ def get_port(
             'You should provide a ports range "[(4000,5000)]"'
             'or "(4000,5000)" or a comma-separated ports set'
             '"[{4000,5000,6000}]" or list of ints "[400,5000,6000,8000]"'
-            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"'
-            % (ports,)
+            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"' % (ports,)
         )
 
     return select_random(ports_set, exclude_ports)
