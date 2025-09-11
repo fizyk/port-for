@@ -1,7 +1,5 @@
 """main port-for functionality."""
 
-import contextlib
-import errno
 import random
 import socket
 from itertools import chain
@@ -104,30 +102,56 @@ def available_good_ports(min_range_len: int = 20, border: int = 3) -> set[int]:
 def port_is_used(port: int, host: str = "127.0.0.1") -> bool:
     """Return if port is used.
 
-    Port is considered used if the current process
-    can't bind to it or the port doesn't refuse connections.
+    If we can connect to the port or we cannot bind to it, it's used.
     """
-    unused = _can_bind(port, host) and _refuses_connection(port, host)
-    return not unused
+    # Used if something is listening on the port, and we can connect to it
+    if _accepts_connection(port, host):
+        return True
+    # Used if we cannot bind to the port.
+    if not _can_bind(port, host):
+        return True
+    return False
 
 
 def _can_bind(port: int, host: str) -> bool:
-    sock = socket.socket()
-    with contextlib.closing(sock):
-        try:
-            sock.bind((host, port))
-        except socket.error:
-            return False
+    """Try binding on common addresses to detect if the port is free.
+
+    Some platforms (notably Windows) allow binding to 127.0.0.1 even when the
+    port is already bound on INADDR_ANY (0.0.0.0). To reliably detect usage, we
+    attempt to bind on both the requested host and INADDR_ANY. If either bind
+    fails, consider the port as used.
+    """
+    hosts_to_try = []
+    # Always try the requested host first
+    hosts_to_try.append(host)
+    # Also try INADDR_ANY for IPv4 to catch cases where 0.0.0.0 is occupied
+    if host not in ("", "0.0.0.0"):
+        hosts_to_try.append("")
+        hosts_to_try.append("0.0.0.0")
+
+    for h in hosts_to_try:
+        with socket.socket() as sock:
+            try:
+                sock.bind((h, port))
+            except socket.error:
+                return False
     return True
 
 
-def _refuses_connection(port: int, host: str) -> bool:
-    sock = socket.socket()
-    with contextlib.closing(sock):
+def _accepts_connection(port: int, host: str) -> bool:
+    """Return True if connect_ex succeeds (service is listening).
+
+    Works reliably across platforms, including Windows.
+    """
+    with socket.socket() as sock:
         sock.settimeout(1)
         sock.setblocking(True)
         err = sock.connect_ex((host, port))
-        return err == errno.ECONNREFUSED
+        # Relying on ECONNREFUSED does not produce reliable results on windows,
+        # which could result in
+        # either ECONREFUSED (Mapped in windows to `WSAECONNREFUSED`),
+        # timeout or return any other error.
+        return err == 0
 
 
 T = TypeVar("T")
