@@ -145,6 +145,11 @@ class StoreTest(unittest.TestCase):
     def setUp(self) -> None:
         """Set up tests."""
         fd, self.fname = tempfile.mkstemp()
+        # Close the file descriptor to allow deletion on Windows
+        try:
+            os.close(fd)
+        except Exception:
+            pass
         self.store = port_for.PortStore(self.fname)
 
     def tearDown(self) -> None:
