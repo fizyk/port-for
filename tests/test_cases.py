@@ -48,11 +48,10 @@ def test_binding() -> None:
 
 def test_binding_high() -> None:
     """Test ports that are not used."""
-    s = socket.socket()
-    s.bind(("", 0))
-    port = s.getsockname()[1]
-    assert port_for.port_is_used(port)
-    s.close()
+    with socket.socket() as s:
+        s.bind(("", 0))
+        port = s.getsockname()[1]
+        assert port_for.port_is_used(port)
     assert not port_for.port_is_used(port)
 
 

@@ -1,6 +1,5 @@
 """main port-for functionality."""
 
-import contextlib
 import random
 import socket
 from itertools import chain
@@ -115,8 +114,7 @@ def port_is_used(port: int, host: str = "127.0.0.1") -> bool:
 
 
 def _can_bind(port: int, host: str) -> bool:
-    sock = socket.socket()
-    with contextlib.closing(sock):
+    with socket.socket() as sock:
         try:
             sock.bind((host, port))
         except socket.error:
@@ -129,13 +127,13 @@ def _accepts_connection(port: int, host: str) -> bool:
 
     Works reliably across platforms, including Windows.
     """
-    sock = socket.socket()
-    with contextlib.closing(sock):
+    with socket.socket() as sock:
         sock.settimeout(1)
         sock.setblocking(True)
         err = sock.connect_ex((host, port))
         # Relying on ECONNREFUSED does not produce reliable results on windows,
-        # which could result in either ECONREFUSED (Mapped in windows to `WSAECONNREFUSED`),
+        # which could result in
+        # either ECONREFUSED (Mapped in windows to `WSAECONNREFUSED`),
         # timeout or return any other error.
         return err == 0
 
