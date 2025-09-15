@@ -2,6 +2,7 @@
 
 import os
 import socket
+import sys
 import tempfile
 import unittest
 from typing import Union
@@ -41,15 +42,19 @@ def test_something_works() -> None:
     assert len(port_for.available_good_ports()) > 1000
 
 
+@pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="Windows runner seems to allow binding low ports.",
+)
 def test_binding() -> None:
-    """Low ports are not available."""
+    """Low ports are not available (for user without root privileges)."""
     assert port_for.port_is_used(10)
 
 
 def test_binding_high() -> None:
     """Test ports that are not used."""
     with socket.socket() as s:
-        s.bind(("", 0))
+        s.bind(("", 1025))
         port = s.getsockname()[1]
         assert port_for.port_is_used(port)
     assert not port_for.port_is_used(port)
