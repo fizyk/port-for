@@ -1,0 +1,3 @@
+port-for supports Windows.
+
+Increased code compatibility with Windows
