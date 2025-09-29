@@ -19,7 +19,7 @@ class PortStore:
     def bind_port(self, app: str, port: int | str | None = None) -> int:
         """Binds port to app in the config."""
         if "=" in app or ":" in app:
-            raise Exception('invalid app name: "%s"' % app)
+            raise Exception(f'invalid app name: "{app}"')
 
         requested_port: str | None = None
         if port is not None:
@@ -31,10 +31,9 @@ class PortStore:
         if parser.has_option(DEFAULTSECT, app):
             actual_port = parser.get(DEFAULTSECT, app)
             if requested_port is not None and requested_port != actual_port:
-                msg = "Can't bind to port %s: %s is already associated with port %s" % (
-                    requested_port,
-                    app,
-                    actual_port,
+                msg = (
+                    f"Can't bind to port {requested_port}: "
+                    f"{app} is already associated with port {actual_port}"
                 )
                 raise PortForException(msg)
             return int(actual_port)
@@ -49,9 +48,7 @@ class PortStore:
         if requested_port in app_by_port:
             binding_app = app_by_port[requested_port]
             if binding_app != app:
-                raise PortForException(
-                    "Port %s is already used by %s!" % (requested_port, binding_app)
-                )
+                raise PortForException(f"Port {requested_port} is already used by {binding_app}!")
 
         # new app & new port
         parser.set(DEFAULTSECT, app, requested_port)
@@ -71,7 +68,7 @@ class PortStore:
 
     def _ensure_config_exists(self) -> None:
         if not os.path.exists(self._config):
-            with open(self._config, "wb"):
+            with open(self._config, "w"):
                 pass
 
     def _get_parser(self) -> ConfigParser:
@@ -81,5 +78,5 @@ class PortStore:
         return parser
 
     def _save(self, parser: ConfigParser) -> None:
-        with open(self._config, "wt") as f:
+        with open(self._config, "w") as f:
             parser.write(f)

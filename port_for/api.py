@@ -218,11 +218,11 @@ def get_port(
         ports_set = ports_set.union(ranges, sets, nums)
     except ValueError:
         raise PortForException(
-            "Unknown format of ports: %s.\n"
+            f"Unknown format of ports: {ports}.\n"
             'You should provide a ports range "[(4000,5000)]"'
             'or "(4000,5000)" or a comma-separated ports set'
             '"[{4000,5000,6000}]" or list of ints "[400,5000,6000,8000]"'
-            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"' % (ports,)
+            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"'
         )
 
     return select_random(ports_set, exclude_ports)
