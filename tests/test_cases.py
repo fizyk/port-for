@@ -2,6 +2,7 @@
 
 import os
 import socket
+import sys
 import tempfile
 import unittest
 from typing import Union
@@ -41,18 +42,21 @@ def test_something_works() -> None:
     assert len(port_for.available_good_ports()) > 1000
 
 
+@pytest.mark.skipif(
+    sys.platform == "win32",
+    reason="Windows runner seems to allow binding low ports.",
+)
 def test_binding() -> None:
-    """Low ports are not available."""
+    """Low ports are not available (for user without root privileges)."""
     assert port_for.port_is_used(10)
 
 
 def test_binding_high() -> None:
     """Test ports that are not used."""
-    s = socket.socket()
-    s.bind(("", 0))
-    port = s.getsockname()[1]
-    assert port_for.port_is_used(port)
-    s.close()
+    with socket.socket() as s:
+        s.bind(("", 1025))
+        port = s.getsockname()[1]
+        assert port_for.port_is_used(port)
     assert not port_for.port_is_used(port)
 
 
@@ -146,6 +150,11 @@ class StoreTest(unittest.TestCase):
     def setUp(self) -> None:
         """Set up tests."""
         fd, self.fname = tempfile.mkstemp()
+        # Close the file descriptor to allow deletion on Windows
+        try:
+            os.close(fd)
+        except Exception:
+            pass
         self.store = port_for.PortStore(self.fname)
 
     def tearDown(self) -> None:
