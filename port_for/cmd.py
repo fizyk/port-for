@@ -30,9 +30,7 @@ def main() -> None:
 
     parser = argparse.ArgumentParser(
         prog="port-for",
-        description=(
-            "Command-line utility to manage local TCP port associations."
-        ),
+        description=("Command-line utility to manage local TCP port associations."),
     )
     parser.add_argument(
         "name",
