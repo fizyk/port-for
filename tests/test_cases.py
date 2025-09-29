@@ -2,7 +2,6 @@
 
 import socket
 import sys
-from typing import Union
 
 import pytest
 
@@ -75,7 +74,7 @@ def test_get_port_exclude() -> None:
 
 
 @pytest.mark.parametrize("port", (1234, "1234"))
-def test_get_port_specific(port: Union[str, int]) -> None:
+def test_get_port_specific(port: str | int) -> None:
     """Test special case for get_port to return same value."""
     assert get_port(port) == 1234
 
@@ -88,7 +87,7 @@ def test_get_port_specific(port: Union[str, int]) -> None:
     ),
 )
 def test_get_port_from_range(
-    port_range: Union[list[tuple[int, int]], tuple[int, int]],
+    port_range: list[tuple[int, int]] | tuple[int, int],
 ) -> None:
     """Test getting random port from given range."""
     assert get_port(port_range) in list(range(2000, 3000 + 1))
@@ -101,14 +100,14 @@ def test_get_port_from_range(
         {4001, 4002, 4003},
     ),
 )
-def test_get_port_from_set(port_set: Union[list[set[int]], set[int]]) -> None:
+def test_get_port_from_set(port_set: list[set[int]] | set[int]) -> None:
     """Test getting random port from given set."""
     assert get_port(port_set) in {4001, 4002, 4003}
 
 
 def test_port_mix() -> None:
     """Test getting random port from given set and range."""
-    sets_and_ranges: list[Union[tuple[int, int], set[int]]] = [
+    sets_and_ranges: list[tuple[int, int] | set[int]] = [
         (2000, 3000),
         {4001, 4002, 4003},
     ]

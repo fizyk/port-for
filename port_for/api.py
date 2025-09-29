@@ -3,7 +3,7 @@
 import random
 import socket
 from itertools import chain
-from typing import Iterable, Optional, Type, TypeVar, Union
+from typing import Iterable, Type, TypeVar
 
 from port_for import ephemeral, utils
 
@@ -14,8 +14,8 @@ SYSTEM_PORT_RANGE = (0, 1024)
 
 
 def select_random(
-    ports: Optional[set[int]] = None,
-    exclude_ports: Optional[Iterable[int]] = None,
+    ports: set[int] | None = None,
+    exclude_ports: Iterable[int] | None = None,
 ) -> int:
     """Return random unused port number."""
     if ports is None:
@@ -40,7 +40,7 @@ def is_available(port: int) -> bool:
 def available_ports(
     low: int = 1024,
     high: int = 65535,
-    exclude_ranges: Optional[list[tuple[int, int]]] = None,
+    exclude_ranges: list[tuple[int, int]] | None = None,
 ) -> set[int]:
     """Return a set of possible ports.
 
@@ -71,7 +71,7 @@ def available_ports(
 
 
 def good_port_ranges(
-    ports: Optional[set[int]] = None, min_range_len: int = 20, border: int = 3
+    ports: set[int] | None = None, min_range_len: int = 20, border: int = 3
 ) -> list[tuple[int, int]]:
     """Return a list of 'good' port ranges.
 
@@ -156,24 +156,24 @@ def filter_by_type(lst: Iterable, type_of: Type[T]) -> list[T]:
     return [e for e in lst if isinstance(e, type_of)]
 
 
-PortType = Union[
-    str,
-    int,
-    tuple[int, int],
-    set[int],
-    list[str],
-    list[int],
-    list[tuple[int, int]],
-    list[set[int]],
-    list[Union[set[int], tuple[int, int]]],
-    list[Union[str, int, tuple[int, int], set[int]]],
-]
+PortType = (
+    str
+    | int
+    | tuple[int, int]
+    | set[int]
+    | list[str]
+    | list[int]
+    | list[tuple[int, int]]
+    | list[set[int]]
+    | list[set[int] | tuple[int, int]]
+    | list[str | int | tuple[int, int] | set[int]]
+)
 
 
 def get_port(
-    ports: Optional[PortType],
-    exclude_ports: Optional[Iterable[int]] = None,
-) -> Optional[int]:
+    ports: PortType | None,
+    exclude_ports: Iterable[int] | None = None,
+) -> int | None:
     """Retun a random available port.
 
     If there's only one port passed (e.g. 5000 or '5000') function

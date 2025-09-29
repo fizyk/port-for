@@ -2,7 +2,6 @@
 
 import os
 from configparser import DEFAULTSECT, ConfigParser
-from typing import Optional, Union
 
 from .api import select_random
 from .exceptions import PortForException
@@ -17,12 +16,12 @@ class PortStore:
         """Initialize PortStore."""
         self._config = config_filename
 
-    def bind_port(self, app: str, port: Optional[Union[int, str]] = None) -> int:
+    def bind_port(self, app: str, port: int | str | None = None) -> int:
         """Binds port to app in the config."""
         if "=" in app or ":" in app:
             raise Exception('invalid app name: "%s"' % app)
 
-        requested_port: Optional[str] = None
+        requested_port: str | None = None
         if port is not None:
             requested_port = str(port)
 
