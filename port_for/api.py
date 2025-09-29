@@ -83,20 +83,14 @@ def good_port_ranges(
         ports = available_ports()
     ranges = utils.to_ranges(list(ports))
     lenghts = sorted([(r[1] - r[0], r) for r in ranges], reverse=True)
-    long_ranges = [
-        length[1] for length in lenghts if length[0] >= min_range_len
-    ]
-    without_borders = [
-        (low + border, high - border) for low, high in long_ranges
-    ]
+    long_ranges = [length[1] for length in lenghts if length[0] >= min_range_len]
+    without_borders = [(low + border, high - border) for low, high in long_ranges]
     return without_borders
 
 
 def available_good_ports(min_range_len: int = 20, border: int = 3) -> set[int]:
     """List available good ports."""
-    return utils.ranges_to_set(
-        good_port_ranges(min_range_len=min_range_len, border=border)
-    )
+    return utils.ranges_to_set(good_port_ranges(min_range_len=min_range_len, border=border))
 
 
 def port_is_used(port: int, host: str = "127.0.0.1") -> bool:
@@ -228,8 +222,7 @@ def get_port(
             'You should provide a ports range "[(4000,5000)]"'
             'or "(4000,5000)" or a comma-separated ports set'
             '"[{4000,5000,6000}]" or list of ints "[400,5000,6000,8000]"'
-            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"'
-            % (ports,)
+            'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"' % (ports,)
         )
 
     return select_random(ports_set, exclude_ports)

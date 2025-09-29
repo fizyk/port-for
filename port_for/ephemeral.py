@@ -36,17 +36,11 @@ def _linux_ranges() -> list[tuple[int, int]]:
 
 
 def _bsd_ranges() -> list[tuple[int, int]]:
-    pp = subprocess.Popen(
-        ["sysctl", "net.inet.ip.portrange"], stdout=subprocess.PIPE
-    )
+    pp = subprocess.Popen(["sysctl", "net.inet.ip.portrange"], stdout=subprocess.PIPE)
     stdout, stderr = pp.communicate()
     lines = stdout.decode("ascii").split("\n")
     out: dict[str, str] = dict(
-        [
-            [x.strip().rsplit(".")[-1] for x in line.split(":")]
-            for line in lines
-            if line
-        ]
+        [[x.strip().rsplit(".")[-1] for x in line.split(":")] for line in lines if line]
     )
 
     ranges = [

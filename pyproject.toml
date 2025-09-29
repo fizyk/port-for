@@ -88,7 +88,7 @@ name = "Miscellaneus"
 showcontent = false
 
 [tool.ruff]
-line-length = 80
+line-length = 100
 target-version = 'py39'
 
 [tool.ruff.lint]

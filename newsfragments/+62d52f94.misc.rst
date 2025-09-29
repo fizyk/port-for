@@ -1,0 +1,1 @@
+Changed maximum line length to 100 characters.
