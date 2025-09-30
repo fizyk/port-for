@@ -4,7 +4,6 @@ It finds 'good' unused TCP localhost port and remembers the association.
 """
 
 import sys
-from typing import Optional
 
 import port_for
 from port_for import PortStore
@@ -15,7 +14,7 @@ def _list(store: PortStore) -> None:
         sys.stdout.write("%s: %s\n" % (app, port))
 
 
-def _bind(store: PortStore, app: str, port: Optional[str] = None) -> None:
+def _bind(store: PortStore, app: str, port: str | None = None) -> None:
     bound_port = store.bind_port(app, port)
     sys.stdout.write("%s\n" % bound_port)
 
