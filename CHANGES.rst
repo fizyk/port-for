@@ -3,6 +3,42 @@ CHANGELOG
 
 .. towncrier release notes start
 
+port-for 1.0.0 (2025-09-30)
+===========================
+
+Breaking changes
+----------------
+
+- Drop support for Python 3.9
+
+
+Features
+--------
+
+- port-for supports Windows.
+
+  Increased code compatibility with Windows (`#4 <https://github.com/fizyk/port-for/issues/4>`__)
+- Replaced docopt with argparse.
+
+  Package got a bit smaller as a result. (`#24 <https://github.com/fizyk/port-for/issues/24>`__)
+- Added Python 3.14 to the supported Python Versions
+
+
+Miscellaneus
+------------
+
+- Adjust links after repository transfer
+- Adjust workflows for actions-reuse 3
+- Changed maximum line length to 100 characters.
+- Fix test_port_mix again.
+- Have all code fully typed.
+- Removed global variable from cli module.
+- Replace black code formatting tool with ruff-format command.
+- Rewritten all tests into pytest style tests.
+- Update formatting with black
+- Use pre-commit for maintaining code style and linting
+
+
 0.7.4 (2024-10-09)
 ==================
 
