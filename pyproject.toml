@@ -50,10 +50,10 @@ packages = ["port_for"]
 [tool.setuptools.package-data]
 port_for = ["py.typed"]
 
-[tool.pytest.ini_options]
-xfail_strict=true
-testpaths = "tests"
-filterwarnings = "error"
+[tool.pytest]
+strict_xfail = true
+testpaths = ["tests"]
+filterwarnings = ["error"]
 
 [tool.towncrier]
 directory = "newsfragments"
