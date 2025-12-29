@@ -9,6 +9,6 @@ name = "pypi"
 towncrier = "==25.8.0"
 pytest = "==9.0.2"
 pytest-cov = "==7.0.0"
-coverage = "==7.13.0"
+coverage = "==7.13.1"
 mypy = {version = "==1.19.1", markers="implementation_name == 'cpython'"}
 tbump = "==6.11.0"
