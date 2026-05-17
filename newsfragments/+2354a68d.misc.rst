@@ -1,0 +1,1 @@
+Drop pr template, add coderabbit configuration
