@@ -1,1 +1,1 @@
-Migrate DevEnv and CI to uv
+Migrate development environment and CI to uv

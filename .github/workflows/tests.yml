@@ -8,14 +8,14 @@ on:
 
 jobs:
   tests:
-    uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@v5.0.0
+    uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@a705c3602adb3ef95f7f4bdf81dcacd3a136d86e # v5.0.0
     with:
       python-versions: '["3.10", "3.11", "3.12", "3.13", "3.14", "pypy3.11"]'
       dependency-manager: uv
   tests-macos:
     needs:
       - tests
-    uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@v5.0.0
+    uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@a705c3602adb3ef95f7f4bdf81dcacd3a136d86e # v5.0.0
     with:
       python-versions: '["3.10", "3.11", "3.12", "3.13", "3.14", "pypy3.11"]'
       dependency-manager: uv
@@ -23,9 +23,9 @@ jobs:
   tests-windows:
     needs:
       - tests
-    uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@v5.0.0
+    uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@a705c3602adb3ef95f7f4bdf81dcacd3a136d86e # v5.0.0
     with:
-      python-versions: '["3.10", "3.11", "3.12", "3.13", "3.14"]'
+      python-versions: '["3.10", "3.11", "3.12", "3.13", "3.14", "pypy3.11"]'
       dependency-manager: uv
       os: windows-latest
       env: '{"PYTHONTRACEMALLOC": 20}'

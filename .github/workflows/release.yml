@@ -10,7 +10,7 @@ on:
 
 jobs:
   release:
-    uses: fizyk/actions-reuse/.github/workflows/shared-release.yml@v5.0.0
+    uses: fizyk/actions-reuse/.github/workflows/shared-release.yml@a705c3602adb3ef95f7f4bdf81dcacd3a136d86e # v5.0.0
     with:
       version: ${{ inputs.version }}
       dependency-manager: 'uv'
