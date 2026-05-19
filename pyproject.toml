@@ -39,6 +39,16 @@ requires-python = ">= 3.10"
 [project.scripts]
 port-for = "port_for.cmd:main"
 
+[dependency-groups]
+dev = [
+    "towncrier==25.8.0",
+    "pytest==9.0.3",
+    "pytest-cov==7.1.0",
+    "coverage==7.13.5",
+    "mypy==1.20.2; implementation_name == 'cpython'",
+    "tbump==6.11.0",
+]
+
 [build-system]
 requires = ["setuptools >= 61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
@@ -154,7 +164,7 @@ search = '"Changelog" = "https://github.com/fizyk/port-for/blob/v{current_versio
 
 [[tool.tbump.before_commit]]
 name = "Build changelog"
-cmd = "pipenv run towncrier build --version {new_version} --yes"
+cmd = "uv run towncrier build --version {new_version} --yes"
 
 # Or run some commands after the git tag and the branch
 # have been pushed:
