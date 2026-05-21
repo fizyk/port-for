@@ -1,0 +1,1 @@
+Use uv ecosystem for python deps
