@@ -1,0 +1,1 @@
+Adopt PEP 639 license metadata: use the ``license = "MIT"`` SPDX expression and ``license-files`` field, drop the deprecated ``License :: OSI Approved :: MIT License`` classifier.
