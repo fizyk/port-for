@@ -5,9 +5,10 @@ on:
       - v*
 jobs:
   build:
-    uses: fizyk/actions-reuse/.github/workflows/shared-pypi.yml@a705c3602adb3ef95f7f4bdf81dcacd3a136d86e # v5.0.0
+    uses: fizyk/actions-reuse/.github/workflows/shared-pypi.yml@14e008c246b7b8eeab7cb5c543117471fee37310 # v5.1.2
     with:
       publish: false
+      dependency-manager: uv
 
   publish:
     name: Publish Python 🐍 distributions 📦 to PyPI
