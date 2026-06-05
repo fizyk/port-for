@@ -1,0 +1,1 @@
+Moved mypy configuration to the pyproject.toml
