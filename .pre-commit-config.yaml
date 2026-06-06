@@ -30,6 +30,16 @@ repos:
         args: [--fix, --exit-non-zero-on-fix, --respect-gitignore, --show-fixes]
       - id: ruff-format
 
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.23.0
+    hooks:
+      - id: pyproject-fmt
+
+  - repo: https://github.com/fizyk/pyproject-validator
+    rev: v0.1.0
+    hooks:
+    -   id: check-python-version-consistency
+
   - repo: https://github.com/rstcheck/rstcheck
     rev: v6.2.5
     hooks:

@@ -168,12 +168,3 @@ Contributing
 Development happens at github: https://github.com/fizyk/port-for/
 
 Issue tracker: https://github.com/fizyk/port-for/issues/new
-
-Release
-=======
-
-Install pipenv and --dev dependencies first, Then run:
-
-.. code-block::
-
-    pipenv run tbump [NEW_VERSION]
