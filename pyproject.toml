@@ -75,12 +75,12 @@ select = [
     "D", # pydocstyle
 ]
 exclude = [ "port_for/_download_ranges.py" ]
-
 # Or run some commands after the git tag and the branch
 # have been pushed:
 #  [[tool.tbump.after_push]]
-#  name = "publish"
-#  cmd = "./publish.sh"
+# name = "publish"
+# cmd = "./publish.sh"
+
 [tool.pyproject-fmt]
 column_width = 100
 indent = 4
