@@ -52,7 +52,7 @@ Changelog = "https://github.com/fizyk/port-for/blob/v1.0.0/CHANGES.rst"
 dev = [
     "coverage==7.14.1",
     "mypy==2.1.0; implementation_name=='cpython'",
-    "pytest==9.0.3",
+    "pytest==9.1.0",
     "pytest-cov==7.1.0",
     "tbump==6.11.0",
     "towncrier==25.8.0",
