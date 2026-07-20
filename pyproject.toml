@@ -50,7 +50,7 @@ Changelog = "https://github.com/fizyk/port-for/blob/v1.0.0/CHANGES.rst"
 
 [dependency-groups]
 dev = [
-    "coverage==7.15.0",
+    "coverage==7.15.1",
     "mypy==2.2.0; implementation_name=='cpython'",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
