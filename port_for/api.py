@@ -2,8 +2,9 @@
 
 import random
 import socket
+from collections.abc import Iterable
 from itertools import chain
-from typing import Iterable, Type, TypeVar
+from typing import TypeVar
 
 from port_for import ephemeral, utils
 
@@ -84,8 +85,7 @@ def good_port_ranges(
     ranges = utils.to_ranges(list(ports))
     lenghts = sorted([(r[1] - r[0], r) for r in ranges], reverse=True)
     long_ranges = [length[1] for length in lenghts if length[0] >= min_range_len]
-    without_borders = [(low + border, high - border) for low, high in long_ranges]
-    return without_borders
+    return [(low + border, high - border) for low, high in long_ranges]
 
 
 def available_good_ports(min_range_len: int = 20, border: int = 3) -> set[int]:
@@ -102,9 +102,7 @@ def port_is_used(port: int, host: str = "127.0.0.1") -> bool:
     if _accepts_connection(port, host):
         return True
     # Used if we cannot bind to the port.
-    if not _can_bind(port, host):
-        return True
-    return False
+    return not _can_bind(port, host)
 
 
 def _can_bind(port: int, host: str) -> bool:
@@ -127,7 +125,7 @@ def _can_bind(port: int, host: str) -> bool:
         with socket.socket() as sock:
             try:
                 sock.bind((h, port))
-            except socket.error:
+            except OSError:
                 return False
     return True
 
@@ -151,7 +149,7 @@ def _accepts_connection(port: int, host: str) -> bool:
 T = TypeVar("T")
 
 
-def filter_by_type(lst: Iterable, type_of: Type[T]) -> list[T]:
+def filter_by_type(lst: Iterable, type_of: type[T]) -> list[T]:
     """Return a list of elements with given type."""
     return [e for e in lst if isinstance(e, type_of)]
 
@@ -192,7 +190,7 @@ def get_port(
     """
     if ports == -1:
         return None
-    elif not ports:
+    if not ports:
         return select_random(None, exclude_ports)
 
     try:
@@ -216,13 +214,13 @@ def get_port(
             )
         )
         ports_set = ports_set.union(ranges, sets, nums)
-    except ValueError:
+    except ValueError as err:
         raise PortForException(
             f"Unknown format of ports: {ports}.\n"
             'You should provide a ports range "[(4000,5000)]"'
             'or "(4000,5000)" or a comma-separated ports set'
             '"[{4000,5000,6000}]" or list of ints "[400,5000,6000,8000]"'
             'or all of them "[(20000, 30000), {48889, 50121}, 4000, 4004]"'
-        )
+        ) from err
 
     return select_random(ports_set, exclude_ports)

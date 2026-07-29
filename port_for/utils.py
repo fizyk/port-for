@@ -1,7 +1,7 @@
 """Port for utils."""
 
 import itertools
-from typing import Iterable, Iterator
+from collections.abc import Iterable, Iterator
 
 
 def ranges_to_set(lst: Iterable[tuple[int, int]]) -> set[int]:
@@ -23,6 +23,6 @@ def to_ranges(lst: Iterable[int]) -> Iterator[tuple[int, int]]:
     [(1, 3), (5, 6)]
 
     """
-    for a, b in itertools.groupby(enumerate(lst), lambda t: t[1] - t[0]):
+    for _, b in itertools.groupby(enumerate(lst), lambda t: t[1] - t[0]):
         c = list(b)
         yield c[0][1], c[-1][1]

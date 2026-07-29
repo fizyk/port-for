@@ -1,21 +1,19 @@
 """Tests for PortStore."""
 
-from typing import Generator
-
-import pytest
-from pytest import TempPathFactory
 
 import port_for
+import pytest
 from port_for import PortStore
+from pytest import TempPathFactory
 
 
 @pytest.fixture
 def port_store(
     tmp_path_factory: TempPathFactory,
-) -> Generator[PortStore, None, None]:
+) -> PortStore:
     """Create an initialized port store."""
     store_path = tmp_path_factory.mktemp("port_store") / "port_store.cfg"
-    yield PortStore(str(store_path))
+    return PortStore(str(store_path))
 
 
 def test_store(port_store: PortStore) -> None:

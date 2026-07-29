@@ -11,12 +11,12 @@ from port_for import PortStore
 
 def _list(store: PortStore) -> None:
     for app, port in store.bound_ports():
-        sys.stdout.write("%s: %s\n" % (app, port))
+        sys.stdout.write(f"{app}: {port}\n")
 
 
 def _bind(store: PortStore, app: str, port: str | None = None) -> None:
     bound_port = store.bind_port(app, port)
-    sys.stdout.write("%s\n" % bound_port)
+    sys.stdout.write(f"{bound_port}\n")
 
 
 def _unbind(store: PortStore, app: str) -> None:

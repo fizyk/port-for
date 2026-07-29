@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """port_for package."""
 
 __version__ = "1.0.0"
@@ -19,14 +18,14 @@ from .store import PortStore
 
 __all__ = (
     "UNASSIGNED_RANGES",
-    "available_good_ports",
-    "available_ports",
-    "is_available",
-    "good_port_ranges",
-    "port_is_used",
-    "select_random",
-    "get_port",
+    "PortForException",
     "PortStore",
     "PortType",
-    "PortForException",
+    "available_good_ports",
+    "available_ports",
+    "get_port",
+    "good_port_ranges",
+    "is_available",
+    "port_is_used",
+    "select_random",
 )

@@ -3,5 +3,3 @@
 
 class PortForException(Exception):
     """Main port-for exception class."""
-
-    pass

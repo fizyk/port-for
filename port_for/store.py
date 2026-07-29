@@ -1,6 +1,6 @@
 """PortStore implementation."""
 
-import os
+import pathlib
 from configparser import DEFAULTSECT, ConfigParser
 
 from .api import select_random
@@ -39,7 +39,7 @@ class PortStore:
             return int(actual_port)
 
         # port is already used by an another app
-        app_by_port = dict((v, k) for k, v in parser.items(DEFAULTSECT))
+        app_by_port = {v: k for k, v in parser.items(DEFAULTSECT)}
         bound_port_numbers = map(int, app_by_port.keys())
 
         if requested_port is None:
@@ -67,8 +67,8 @@ class PortStore:
         return [(app, int(port)) for app, port in self._get_parser().items(DEFAULTSECT)]
 
     def _ensure_config_exists(self) -> None:
-        if not os.path.exists(self._config):
-            with open(self._config, "w"):
+        if not pathlib.Path(self._config).exists():
+            with pathlib.Path(self._config).open("w"):
                 pass
 
     def _get_parser(self) -> ConfigParser:
@@ -78,5 +78,5 @@ class PortStore:
         return parser
 
     def _save(self, parser: ConfigParser) -> None:
-        with open(self._config, "w") as f:
+        with pathlib.Path(self._config).open("w") as f:
             parser.write(f)

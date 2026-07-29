@@ -3,9 +3,8 @@
 import socket
 import sys
 
-import pytest
-
 import port_for
+import pytest
 from port_for.api import get_port
 from port_for.utils import ranges_to_set
 
@@ -67,10 +66,10 @@ def test_get_port_none() -> None:
 
 def test_get_port_exclude() -> None:
     """Only one port is available at that range."""
-    assert 8002 == get_port(
+    assert get_port(
         (8000, 8010),
         [8000, 8001, 8003, 8004, 8005, 8006, 8007, 8008, 8009, 8010],
-    )
+    ) == 8002
 
 
 @pytest.mark.parametrize("port", (1234, "1234"))
