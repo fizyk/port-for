@@ -1,8 +1,9 @@
 """Tests for port_for.select_random."""
 
-import port_for
 import pytest
 from pytest import MonkeyPatch
+
+import port_for
 
 
 def test_all_used(monkeypatch: MonkeyPatch) -> None:

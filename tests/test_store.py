@@ -1,10 +1,10 @@
 """Tests for PortStore."""
 
+import pytest
+from pytest import TempPathFactory
 
 import port_for
-import pytest
 from port_for import PortStore
-from pytest import TempPathFactory
 
 
 @pytest.fixture
