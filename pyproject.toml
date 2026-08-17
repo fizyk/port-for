@@ -32,21 +32,21 @@ classifiers = [
     "Topic :: System :: Systems Administration",
 ]
 
-[[project.authors]]
-name = "Mikhail Korobov"
-email = "kmike84@gmail.com"
-
 [[project.maintainers]]
 name = "Grzegorz Śliwiński"
 email = "fizyk+pypi@fizyk.dev"
 
-[project.scripts]
-port-for = "port_for.cmd:main"
+[[project.authors]]
+name = "Mikhail Korobov"
+email = "kmike84@gmail.com"
 
 [project.urls]
 Source = "https://github.com/fizyk/port-for/"
 "Bug Tracker" = "https://github.com/fizyk/port-for/issues"
 Changelog = "https://github.com/fizyk/port-for/blob/v1.0.0/CHANGES.rst"
+
+[project.scripts]
+port-for = "port_for.cmd:main"
 
 [dependency-groups]
 dev = [
