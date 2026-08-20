@@ -8,8 +8,12 @@ on:
         required: true
         type: string
 
+permissions: {}
+
 jobs:
   release:
+    permissions:
+      contents: read
     uses: fizyk/actions-reuse/.github/workflows/shared-release.yml@ae6177442c58a91f60ffaf7f7a90a331aaf3b049 # v5.4.1
     with:
       version: ${{ inputs.version }}
