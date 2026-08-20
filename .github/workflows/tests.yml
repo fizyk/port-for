@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ master ]
 
+permissions: {}
+
 jobs:
   tests:
     uses: fizyk/actions-reuse/.github/workflows/shared-tests-pytests.yml@ae6177442c58a91f60ffaf7f7a90a331aaf3b049 # v5.4.1
