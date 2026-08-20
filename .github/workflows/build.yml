@@ -9,6 +9,6 @@ on:
 
 jobs:
   build:
-    uses: fizyk/actions-reuse/.github/workflows/shared-pypi.yml@c76d10cf9448b3a9afdbef29e727e0fd00b2f544 # v5.2.8
+    uses: fizyk/actions-reuse/.github/workflows/shared-pypi.yml@ae6177442c58a91f60ffaf7f7a90a331aaf3b049 # v5.4.1
     with:
       dependency-manager: uv
