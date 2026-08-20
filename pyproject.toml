@@ -54,8 +54,10 @@ dev = [
     "mypy==2.3.0; implementation_name=='cpython'",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
-    "tbump==6.11.0",
     "towncrier==25.8.0",
+]
+release = [
+    "tbump==6.11.0",
 ]
 
 [tool.uv.build-backend]
@@ -170,22 +172,32 @@ filename = "CHANGES.rst"
 issue_format = "`#{issue} <https://github.com/fizyk/port-for/issues/{issue}>`__"
 single_file = true
 
-[tool.towncrier.fragment.break]
+[[tool.towncrier.type]]
+directory = "break"
 name = "Breaking changes"
 showcontent = true
 
-[tool.towncrier.fragment.bugfix]
-name = "Bugfixes"
-showcontent = true
-
-[tool.towncrier.fragment.depr]
+[[tool.towncrier.type]]
+directory = "depr"
 name = "Deprecations"
 showcontent = true
 
-[tool.towncrier.fragment.feature]
+[[tool.towncrier.type]]
+directory = "feature"
 name = "Features"
 showcontent = true
 
-[tool.towncrier.fragment.misc]
+[[tool.towncrier.type]]
+directory = "bugfix"
+name = "Bugfixes"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "docs"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "misc"
 name = "Miscellaneous"
 showcontent = true

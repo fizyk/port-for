@@ -11,8 +11,20 @@ updates:
 - package-ecosystem:  github-actions
   directory: "/"
   schedule:
-    interval: weekly
+    interval: daily
     time: "02:00"
+  open-pull-requests-limit: 1
+  cooldown:
+    default-days: 7
+  groups:
+    fizyk-actions-reuse:
+      patterns:
+      - "fizyk/actions-reuse/*"
+- package-ecosystem: pre-commit
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "04:05"
   open-pull-requests-limit: 1
   cooldown:
     default-days: 7

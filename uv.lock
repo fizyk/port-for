@@ -533,8 +533,10 @@ dev = [
     { name = "mypy", marker = "implementation_name == 'cpython'" },
     { name = "pytest" },
     { name = "pytest-cov" },
-    { name = "tbump" },
     { name = "towncrier" },
+]
+release = [
+    { name = "tbump" },
 ]
 
 [package.metadata]
@@ -545,9 +547,9 @@ dev = [
     { name = "mypy", marker = "implementation_name == 'cpython'", specifier = "==2.3.0" },
     { name = "pytest", specifier = "==9.1.1" },
     { name = "pytest-cov", specifier = "==7.1.0" },
-    { name = "tbump", specifier = "==6.11.0" },
     { name = "towncrier", specifier = "==25.8.0" },
 ]
+release = [{ name = "tbump", specifier = "==6.11.0" }]
 
 [[package]]
 name = "pygments"
