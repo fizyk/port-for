@@ -139,7 +139,7 @@ def _accepts_connection(port: int, host: str) -> bool:
     """
     with socket.socket() as sock:
         sock.settimeout(1)
-        sock.setblocking(True)
+        sock.setblocking(True)  # noqa: FBT003 - C function, no kwargs allowed
         err = sock.connect_ex((host, port))
         # Relying on ECONNREFUSED does not produce reliable results on windows,
         # which could result in
