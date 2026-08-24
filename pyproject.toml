@@ -51,7 +51,7 @@ port-for = "port_for.cmd:main"
 [dependency-groups]
 dev = [
     "coverage==7.15.4",
-    "mypy==2.3.0; implementation_name=='cpython'",
+    "mypy==2.3.1; implementation_name=='cpython'",
     "pytest==9.1.1",
     "pytest-cov==7.1.0",
     "towncrier==25.8.0",
