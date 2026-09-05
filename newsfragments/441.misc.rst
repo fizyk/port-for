@@ -1,1 +1,0 @@
-Add zizmor to pre-commit and address its findings.

@@ -3,6 +3,39 @@ CHANGELOG
 
 .. towncrier release notes start
 
+port-for 1.1.0 (2026-09-05)
+===========================
+
+Features
+--------
+
+- Switch the build backend from ``setuptools`` to ``uv_build``, and build distributions via ``uv build`` in CI.
+
+
+Miscellaneous
+-------------
+
+- Update pytest configuration to toml-native (`#342 <https://github.com/fizyk/port-for/issues/342>`__)
+- Do not install mypy on pypy. (`#345 <https://github.com/fizyk/port-for/issues/345>`__)
+- Add zizmor to pre-commit and address its findings. (`#441 <https://github.com/fizyk/port-for/issues/441>`__)
+- Add release-schedule workflow replacing manual release workflow. (`#448 <https://github.com/fizyk/port-for/issues/448>`__)
+- Migrated the Automerge workflow to `fizyk/actions-reuse` version 5.4.1. (`#453 <https://github.com/fizyk/port-for/issues/453>`__)
+- Configure Dependabot to update pre-commit dependencies. (`#455 <https://github.com/fizyk/port-for/issues/455>`__)
+- Add flake8-boolean-trap (FBT) to the ruff lint ruleset. (`#461 <https://github.com/fizyk/port-for/issues/461>`__)
+- Add Python 3.15 to the CI
+- Add pypy3.11 to the CI
+- Adopt PEP 639 license metadata: use the ``license = "MIT"`` SPDX expression and ``license-files`` field, drop the deprecated ``License :: OSI Approved :: MIT License`` classifier.
+- Drop pr template, add coderabbit configuration
+- Extend pre-commit with pyproject-fmt to format pyproject.toml
+- Extend pre-commit with pyproject-validator
+- Migrate development environment and CI to uv
+- Migrate package publishing step to trusted publishing.
+- Moved mypy configuration to the pyproject.toml
+- Reuse the ``build.yml`` workflow in ``pypi.yml`` so the pinned action version and dependency manager live in one place.
+- Turn off windows pypy tests
+- Use uv ecosystem for python deps
+
+
 port-for 1.0.0 (2025-09-30)
 ===========================
 
