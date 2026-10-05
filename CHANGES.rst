@@ -3,6 +3,15 @@ CHANGELOG
 
 .. towncrier release notes start
 
+port-for 1.1.1 (2026-10-05)
+===========================
+
+Miscellaneous
+-------------
+
+- Autofix workflows with zizmor 1.30 (`#475 <https://github.com/fizyk/port-for/issues/475>`__)
+
+
 port-for 1.1.0 (2026-09-05)
 ===========================
 
